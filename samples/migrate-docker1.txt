@@ -1,0 +1,417 @@
+2018-07-18 12:34:19,659 INFO edge_controller.py 399 Start edge controller version 57d29cc
+
+2018-07-18 12:34:19,661 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:34:19,661 DEBUG config.py 28 No config file found
+2018-07-18 12:34:19,661 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:34:19,661 DEBUG config.py 28 No config file found
+2018-07-18 12:34:19,661 INFO edge_controller.py 46 start test network monitor using netperf
+2018-07-18 12:34:19,662 DEBUG sql_service.py 15 CREATE TABLE networkMonitor (timestamp text, source_dest text, latency real, bandwidth real)
+2018-07-18 12:34:19,672 DEBUG network_monitor.py 75 measure metric from 10.0.2.15 to 10.0.99.10
+2018-07-18 12:34:29,679 DEBUG network_monitor.py 46 mean latency 14.87 microseconds
+2018-07-18 12:34:39,694 DEBUG network_monitor.py 64 bandwidth 10886.03 Mbps
+2018-07-18 12:34:39,694 DEBUG sql_service.py 15 INSERT INTO networkMonitor VALUES ('20180718123439', '10.0.2.15_10.0.99.10', 14.87, 10886.03)
+2018-07-18 12:34:39,705 DEBUG network_monitor.py 75 measure metric from 10.0.2.15 to 10.0.99.11
+2018-07-18 12:42:37,825 INFO edge_controller.py 247 process_signal {'service_name': 'openface', 'end_user': 'testdiscover', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:42:37,827 INFO edge_controller.py 251 request discovery a service {'service_name': 'openface', 'end_user': 'testdiscover', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:42:37,827 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:42:37,828 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:42:37,829 DEBUG config.py 28 No config file found
+2018-07-18 12:42:37,829 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:42:37,829 DEBUG config.py 28 No config file found
+2018-07-18 12:42:37,830 INFO edge_controller.py 149 check container name openfacetestdiscover
+2018-07-18 12:42:37,835 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/openfacetestdiscover/json HTTP/1.1" 404 54
+2018-07-18 12:42:38,092 DEBUG connectionpool.py 393 http://localhost:None "POST /v1.35/containers/create?name=openfacetestdiscover HTTP/1.1" 201 90
+2018-07-18 12:42:38,096 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/bd8881755af41b07f0fe0c03603bd154e2d6d0e8ebadfa4202af694c3767fd2b/json HTTP/1.1" 200 None
+2018-07-18 12:42:38,646 DEBUG connectionpool.py 393 http://localhost:None "POST /v1.35/containers/bd8881755af41b07f0fe0c03603bd154e2d6d0e8ebadfa4202af694c3767fd2b/start HTTP/1.1" 204 0
+2018-07-18 12:42:38,647 DEBUG edge_controller.py 198 adding service ....{'container_img': 'ngovanmao/openface:12', 'end_user': 'testdiscover', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9999, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'openface', 'debug': True, 'port': 9900, 'user': 'root'}
+2018-07-18 12:42:38,647 DEBUG edge_controller.py 126 get_service openface user_name testdiscover
+2018-07-18 12:42:38,648 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "ngovanmao/openface:12", "end_user": "testdiscover", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9999, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "openface", "debug": true, "port": 9900, "user": "root"}}
+2018-07-18 12:42:38,648 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:42:40,507 INFO edge_controller.py 247 process_signal {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:42:40,508 INFO edge_controller.py 251 request discovery a service {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:42:40,508 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:42:40,509 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:42:40,509 DEBUG config.py 28 No config file found
+2018-07-18 12:42:40,509 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:42:40,509 DEBUG config.py 28 No config file found
+2018-07-18 12:42:40,510 INFO edge_controller.py 149 check container name openfacetest01enduser
+2018-07-18 12:42:40,513 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/openfacetest01enduser/json HTTP/1.1" 404 55
+2018-07-18 12:42:41,021 DEBUG connectionpool.py 393 http://localhost:None "POST /v1.35/containers/create?name=openfacetest01enduser HTTP/1.1" 201 90
+2018-07-18 12:42:41,025 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/5e82d2b0ecb1022292416bc78fc85462d9555f89ffe6e17a18974ac68ea0133c/json HTTP/1.1" 200 None
+2018-07-18 12:42:41,924 DEBUG connectionpool.py 393 http://localhost:None "POST /v1.35/containers/5e82d2b0ecb1022292416bc78fc85462d9555f89ffe6e17a18974ac68ea0133c/start HTTP/1.1" 204 0
+2018-07-18 12:42:41,925 DEBUG edge_controller.py 198 adding service ....{'container_img': 'ngovanmao/openface:12', 'end_user': 'test01enduser', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9999, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'openface', 'debug': True, 'port': 9901, 'user': 'root'}
+2018-07-18 12:42:41,926 DEBUG edge_controller.py 126 get_service openface user_name test01enduser
+2018-07-18 12:42:41,926 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "ngovanmao/openface:12", "end_user": "test01enduser", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9999, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "openface", "debug": true, "port": 9901, "user": "root"}}
+2018-07-18 12:42:41,926 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:43:02,406 INFO edge_controller.py 247 process_signal {'service_name': 'simple', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:43:02,408 INFO edge_controller.py 251 request discovery a service {'service_name': 'simple', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:43:02,408 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:43:02,409 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:02,409 DEBUG config.py 28 No config file found
+2018-07-18 12:43:02,409 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:02,409 DEBUG config.py 28 No config file found
+2018-07-18 12:43:02,410 INFO edge_controller.py 149 check container name simpletest01enduser
+2018-07-18 12:43:02,412 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/simpletest01enduser/json HTTP/1.1" 200 None
+2018-07-18 12:43:02,414 INFO edge_controller.py 153 Detect the container simpletest01enduser for usertest01enduser.
+2018-07-18 12:43:02,876 DEBUG connectionpool.py 393 http://localhost:None "DELETE /v1.35/containers/0d3416c9aa031741cc6b8c5d9fd6567dd908859f96ec4e7a0d56051a025d6c6a?force=True&link=False&v=False HTTP/1.1" 204 0
+2018-07-18 12:43:03,051 DEBUG connectionpool.py 393 http://localhost:None "POST /v1.35/containers/create?name=simpletest01enduser HTTP/1.1" 201 90
+2018-07-18 12:43:03,055 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/64898be64191ef4c17e2b3035ab5a0310d03ffccb65f912ea62a62adb5acff61/json HTTP/1.1" 200 None
+2018-07-18 12:43:03,606 DEBUG connectionpool.py 393 http://localhost:None "POST /v1.35/containers/64898be64191ef4c17e2b3035ab5a0310d03ffccb65f912ea62a62adb5acff61/start HTTP/1.1" 204 0
+2018-07-18 12:43:03,608 DEBUG edge_controller.py 183 adding service ....{'container_img': 'gochit/simple_tcp_service:latest', 'end_user': 'test01enduser', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9966, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'simple', 'debug': True, 'port': 9902, 'user': 'root'}
+2018-07-18 12:43:03,608 DEBUG edge_controller.py 126 get_service simple user_name test01enduser
+2018-07-18 12:43:03,608 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9966, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "simple", "debug": true, "port": 9902, "user": "root"}}
+2018-07-18 12:43:03,609 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:43:05,624 INFO edge_controller.py 247 process_signal {'service_name': 'yolo', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:43:05,626 INFO edge_controller.py 251 request discovery a service {'service_name': 'yolo', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:43:05,626 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:43:05,627 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:05,628 DEBUG config.py 28 No config file found
+2018-07-18 12:43:05,628 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:05,628 DEBUG config.py 28 No config file found
+2018-07-18 12:43:05,628 INFO edge_controller.py 149 check container name yolotest01enduser
+2018-07-18 12:43:05,634 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/yolotest01enduser/json HTTP/1.1" 404 51
+2018-07-18 12:43:05,884 DEBUG connectionpool.py 393 http://localhost:None "POST /v1.35/containers/create?name=yolotest01enduser HTTP/1.1" 201 90
+2018-07-18 12:43:05,888 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/d2263155b575862737fc1330f0b8c452f5e014bea856027e61bae4355d28c630/json HTTP/1.1" 200 None
+2018-07-18 12:43:06,360 DEBUG connectionpool.py 393 http://localhost:None "POST /v1.35/containers/d2263155b575862737fc1330f0b8c452f5e014bea856027e61bae4355d28c630/start HTTP/1.1" 204 0
+2018-07-18 12:43:06,361 DEBUG edge_controller.py 198 adding service ....{'container_img': 'ngovanmao/yolov3-mini-cpu-amd64:01', 'end_user': 'test01enduser', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9988, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'yolo', 'debug': True, 'port': 9903, 'user': 'root'}
+2018-07-18 12:43:06,362 DEBUG edge_controller.py 126 get_service yolo user_name test01enduser
+2018-07-18 12:43:06,362 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "ngovanmao/yolov3-mini-cpu-amd64:01", "end_user": "test01enduser", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9988, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "yolo", "debug": true, "port": 9903, "user": "root"}}
+2018-07-18 12:43:06,363 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:43:12,983 INFO edge_controller.py 247 process_signal {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:43:12,983 INFO edge_controller.py 251 request discovery a service {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:43:12,984 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:43:12,984 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:12,984 DEBUG config.py 28 No config file found
+2018-07-18 12:43:12,984 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:12,984 DEBUG config.py 28 No config file found
+2018-07-18 12:43:12,984 INFO edge_controller.py 149 check container name openfacetest01enduser
+2018-07-18 12:43:12,986 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/openfacetest01enduser/json HTTP/1.1" 200 None
+2018-07-18 12:43:12,987 INFO edge_controller.py 153 Detect the container openfacetest01enduser for usertest01enduser.
+2018-07-18 12:43:12,987 DEBUG edge_controller.py 155 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb0ec59890>, <migrate_node.MigrateNode object at 0x7feb11a042d0>, <migrate_node.MigrateNode object at 0x7feb0aaf9390>]
+2018-07-18 12:43:12,987 DEBUG edge_controller.py 126 get_service openface user_name test01enduser
+2018-07-18 12:43:12,987 DEBUG edge_controller.py 159 found available service ....{'container_img': 'ngovanmao/openface:12', 'end_user': 'test01enduser', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9999, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'openface', 'debug': True, 'port': 9901, 'user': 'root'}
+2018-07-18 12:43:12,987 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "ngovanmao/openface:12", "end_user": "test01enduser", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9999, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "openface", "debug": true, "port": 9901, "user": "root"}}
+2018-07-18 12:43:12,987 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:43:13,591 INFO edge_controller.py 273 process_signal {"serviceName":"openface","end_user":"test01enduser","nearbyAP":[{"SSID":"docker3","BSSID":"52:3e:aa:49:87:7a","level":-62},{"SSID":"docker2","BSSID":"86:16:f9:0f:b5:ce","level":-58}],"currentRssi":-60}
+2018-07-18 12:43:13,591 DEBUG edge_controller.py 274 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb0ec59890>, <migrate_node.MigrateNode object at 0x7feb11a042d0>, <migrate_node.MigrateNode object at 0x7feb0aaf9390>]
+2018-07-18 12:43:13,593 INFO edge_controller.py 220 find service_name openface of end_user test01enduser
+2018-07-18 12:43:13,593 DEBUG edge_controller.py 126 get_service openface user_name test01enduser
+2018-07-18 12:43:13,593 DEBUG edge_controller.py 227 migrating_service name openface IP: 10.0.99.10:9901
+2018-07-18 12:43:13,593 DEBUG edge_controller.py 239 migrate_plan.next_service_ip 10.0.99.11
+2018-07-18 12:43:13,593 INFO edge_controller.py 286 Start migrating a service to 10.0.99.11
+2018-07-18 12:43:13,593 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:13,593 DEBUG config.py 28 No config file found
+2018-07-18 12:43:13,594 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:13,594 DEBUG config.py 28 No config file found
+2018-07-18 12:43:13,594 DEBUG migrate_source.py 75 send msg: pull {"container_img": "ngovanmao/openface:12", "end_user": "test01enduser", "ip": "10.0.99.11", "container_port": 9999, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9901, "snapshot": "snapshot", "service_name": "openface", "method": "delta", "user": "root"} to 10.0.99.11 at port 5678
+2018-07-18 12:43:13,599 INFO migrate_source.py 196 return message from migrate_dest dest_port 9901
+2018-07-18 12:43:13,599 INFO edge_controller.py 304 Will send back payload: {"nextPassword": "10.0.99.11", "nextEdgePort": "9901", "elapsedTime": 3, "migration": true, "nextBSSID": "86:16:f9:0f:b5:ce", "nextEdgeIP": "10.0.99.11", "nextSSID": "docker2"}
+2018-07-18 12:43:13,600 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:43:13,605 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/json?all=1&limit=-1&filters=%7B%22name%22%3A+%5B%22openfacetest01enduser%22%5D%7D&trunc_cmd=0&size=0 HTTP/1.1" 200 995
+2018-07-18 12:43:13,608 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/5e82d2b0ecb1022292416bc78fc85462d9555f89ffe6e17a18974ac68ea0133c/json HTTP/1.1" 200 None
+2018-07-18 12:43:13,610 DEBUG migrate_source.py 90 docker checkpoint create --checkpoint-dir=/tmp/openfacetest01enduser --leave-running openfacetest01enduser snapshot_pre
+2018-07-18 12:43:14,525 INFO migrate_source.py 95 ['fdinfo-2.img', 'fs-1.img', 'pagemap-1.img', 'config.json', 'utsns-11.img', 'mm-1.img', 'fs-7.img', 'pagemap-7.img', 'pstree.img', 'fs-5.img', 'seccomp.img', 'fdinfo-4.img', 'mm-7.img', 'pipes-data.img', 'ids-7.img', 'pages-3.img', 'tmpfs-dev-79.tar.gz.img', 'ipcns-var-10.img', 'netns-ct-9.img', 'mountpoints-12.img', 'inventory.img', 'core-7.img', 'files.img', 'ids-5.img', 'descriptors.json', 'tmpfs-dev-75.tar.gz.img', 'core-1.img', 'mm-5.img', 'criu.work', 'core-5.img', 'pagemap-5.img', 'netns-exp-9.img', 'tmpfs-dev-78.tar.gz.img', 'pages-2.img', 'fdinfo-3.img', 'cgroup.img', 'pages-1.img', 'ids-1.img']
+2018-07-18 12:43:14,526 INFO migrate_node.py 22 :time: pre-checkpoint=0.925141811371
+2018-07-18 12:43:14,526 DEBUG migrate_source.py 133 rsync -az /tmp/openfacetest01enduser/snapshot_pre root@10.0.99.11:/tmp/openfacetest01enduser/
+2018-07-18 12:43:24,689 DEBUG migrate_source.py 135 output: 
+2018-07-18 12:43:24,690 INFO migrate_node.py 22 :time: pre-rsync=10.1635751724
+2018-07-18 12:43:24,705 INFO migrate_node.py 25 :size: pre-rsync=189139110
+2018-07-18 12:43:24,705 INFO migrate_node.py 22 :time: prepare=11.1046099663
+2018-07-18 12:43:24,706 DEBUG migrate_source.py 101 docker checkpoint create --checkpoint-dir=/tmp/openfacetest01enduser openfacetest01enduser snapshot
+2018-07-18 12:43:25,028 DEBUG migrate_source.py 106 output: snapshot
+
+2018-07-18 12:43:25,028 INFO migrate_node.py 22 :time: checkpoint=0.32265496254
+2018-07-18 12:43:25,028 DEBUG migrate_source.py 152 rsync -az '-f- *.img' /tmp/openfacetest01enduser/snapshot root@10.0.99.11:/tmp/openfacetest01enduser/
+2018-07-18 12:43:25,419 INFO migrate_node.py 22 :time: rsync=0.390625
+2018-07-18 12:43:25,425 INFO migrate_node.py 25 :size: rsync=724057
+2018-07-18 12:43:28,297 INFO migrate_node.py 22 :time: xdelta_source=2.87149882317
+2018-07-18 12:43:28,298 DEBUG migrate_source.py 168 rsync -az /tmp/openfacetest01enduser/snapshot_delta root@10.0.99.11:/tmp/openfacetest01enduser/
+2018-07-18 12:43:28,634 DEBUG migrate_source.py 170 output: 
+2018-07-18 12:43:28,634 INFO migrate_node.py 22 :time: final_rsync=0.336386203766
+2018-07-18 12:43:28,640 INFO migrate_node.py 25 :size: final_rsync=10444
+2018-07-18 12:43:28,640 DEBUG migrate_source.py 81 send msg: migrate {"container_img": "ngovanmao/openface:12", "end_user": "test01enduser", "ip": "10.0.99.11", "container_port": 9999, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9901, "snapshot": "snapshot", "service_name": "openface", "method": "delta", "user": "root"} to 10.0.99.11 at port 5678
+2018-07-18 12:43:28,640 INFO migrate_node.py 22 :time: migrate=3.93496799469
+2018-07-18 12:43:37,426 INFO edge_controller.py 247 process_signal {'service_name': 'simple', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:43:37,428 INFO edge_controller.py 251 request discovery a service {'service_name': 'simple', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:43:37,428 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:43:37,429 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:37,429 DEBUG config.py 28 No config file found
+2018-07-18 12:43:37,429 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:37,430 DEBUG config.py 28 No config file found
+2018-07-18 12:43:37,430 INFO edge_controller.py 149 check container name simpletest01enduser
+2018-07-18 12:43:37,436 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/simpletest01enduser/json HTTP/1.1" 200 None
+2018-07-18 12:43:37,437 INFO edge_controller.py 153 Detect the container simpletest01enduser for usertest01enduser.
+2018-07-18 12:43:37,437 DEBUG edge_controller.py 155 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb11a042d0>, <migrate_node.MigrateNode object at 0x7feb0aaf9390>]
+2018-07-18 12:43:37,437 DEBUG edge_controller.py 126 get_service simple user_name test01enduser
+2018-07-18 12:43:37,437 DEBUG edge_controller.py 159 found available service ....{'container_img': 'gochit/simple_tcp_service:latest', 'end_user': 'test01enduser', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9966, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'simple', 'debug': True, 'port': 9902, 'user': 'root'}
+2018-07-18 12:43:37,438 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9966, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "simple", "debug": true, "port": 9902, "user": "root"}}
+2018-07-18 12:43:37,438 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:43:37,451 INFO edge_controller.py 273 process_signal {"serviceName":"simple","end_user":"test01enduser","nearbyAP":[{"SSID":"docker3","BSSID":"52:3e:aa:49:87:7a","level":-62},{"SSID":"docker2","BSSID":"86:16:f9:0f:b5:ce","level":-58}],"currentRssi":-60}
+2018-07-18 12:43:37,451 DEBUG edge_controller.py 274 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb11a042d0>, <migrate_node.MigrateNode object at 0x7feb0aaf9390>]
+2018-07-18 12:43:37,453 INFO edge_controller.py 220 find service_name simple of end_user test01enduser
+2018-07-18 12:43:37,453 DEBUG edge_controller.py 126 get_service simple user_name test01enduser
+2018-07-18 12:43:37,454 DEBUG edge_controller.py 227 migrating_service name simple IP: 10.0.99.10:9902
+2018-07-18 12:43:37,454 DEBUG edge_controller.py 239 migrate_plan.next_service_ip 10.0.99.11
+2018-07-18 12:43:37,454 INFO edge_controller.py 286 Start migrating a service to 10.0.99.11
+2018-07-18 12:43:37,454 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:37,454 DEBUG config.py 28 No config file found
+2018-07-18 12:43:37,454 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:37,455 DEBUG config.py 28 No config file found
+2018-07-18 12:43:37,455 DEBUG migrate_source.py 75 send msg: pull {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.11", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9902, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"} to 10.0.99.11 at port 5678
+2018-07-18 12:43:37,461 INFO migrate_source.py 196 return message from migrate_dest dest_port 9902
+2018-07-18 12:43:37,461 INFO edge_controller.py 304 Will send back payload: {"nextPassword": "10.0.99.11", "nextEdgePort": "9902", "elapsedTime": 3, "migration": true, "nextBSSID": "86:16:f9:0f:b5:ce", "nextEdgeIP": "10.0.99.11", "nextSSID": "docker2"}
+2018-07-18 12:43:37,470 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:43:37,473 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/json?all=1&limit=-1&filters=%7B%22name%22%3A+%5B%22simpletest01enduser%22%5D%7D&trunc_cmd=0&size=0 HTTP/1.1" 200 894
+2018-07-18 12:43:37,522 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/64898be64191ef4c17e2b3035ab5a0310d03ffccb65f912ea62a62adb5acff61/json HTTP/1.1" 200 None
+2018-07-18 12:43:37,523 DEBUG migrate_source.py 90 docker checkpoint create --checkpoint-dir=/tmp/simpletest01enduser --leave-running simpletest01enduser snapshot_pre
+2018-07-18 12:43:37,736 INFO migrate_source.py 95 ['fdinfo-2.img', 'fs-1.img', 'pagemap-1.img', 'config.json', 'utsns-11.img', 'tmpfs-dev-84.tar.gz.img', 'mm-1.img', 'pstree.img', 'fs-5.img', 'seccomp.img', 'tmpfs-dev-87.tar.gz.img', 'pipes-data.img', 'ipcns-var-10.img', 'netns-ct-9.img', 'mountpoints-12.img', 'inventory.img', 'files.img', 'ids-5.img', 'descriptors.json', 'core-1.img', 'mm-5.img', 'criu.work', 'core-5.img', 'pagemap-5.img', 'netns-exp-9.img', 'pages-2.img', 'fdinfo-3.img', 'cgroup.img', 'pages-1.img', 'ids-1.img', 'tmpfs-dev-88.tar.gz.img']
+2018-07-18 12:43:37,736 INFO migrate_node.py 22 :time: pre-checkpoint=0.272830963135
+2018-07-18 12:43:37,736 DEBUG migrate_source.py 133 rsync -az /tmp/simpletest01enduser/snapshot_pre root@10.0.99.11:/tmp/simpletest01enduser/
+2018-07-18 12:43:38,432 DEBUG migrate_source.py 135 output: 
+2018-07-18 12:43:38,432 INFO migrate_node.py 22 :time: pre-rsync=0.696176052094
+2018-07-18 12:43:38,441 INFO migrate_node.py 25 :size: pre-rsync=9705037
+2018-07-18 12:43:38,441 INFO migrate_node.py 22 :time: prepare=0.977849960327
+2018-07-18 12:43:38,441 DEBUG migrate_source.py 101 docker checkpoint create --checkpoint-dir=/tmp/simpletest01enduser simpletest01enduser snapshot
+2018-07-18 12:43:38,590 DEBUG migrate_source.py 106 output: snapshot
+
+2018-07-18 12:43:38,590 INFO migrate_node.py 22 :time: checkpoint=0.14896607399
+2018-07-18 12:43:38,590 DEBUG migrate_source.py 152 rsync -az '-f- *.img' /tmp/simpletest01enduser/snapshot root@10.0.99.11:/tmp/simpletest01enduser/
+2018-07-18 12:43:38,887 INFO migrate_node.py 22 :time: rsync=0.29619717598
+2018-07-18 12:43:38,893 INFO migrate_node.py 25 :size: rsync=134108
+2018-07-18 12:43:39,519 INFO migrate_node.py 22 :time: xdelta_source=0.6253490448
+2018-07-18 12:43:39,519 DEBUG migrate_source.py 168 rsync -az /tmp/simpletest01enduser/snapshot_delta root@10.0.99.11:/tmp/simpletest01enduser/
+2018-07-18 12:43:40,285 DEBUG migrate_source.py 170 output: 
+2018-07-18 12:43:40,286 INFO migrate_node.py 22 :time: final_rsync=0.766433000565
+2018-07-18 12:43:40,292 INFO migrate_node.py 25 :size: final_rsync=17443
+2018-07-18 12:43:40,293 DEBUG migrate_source.py 81 send msg: migrate {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.11", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9902, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"} to 10.0.99.11 at port 5678
+2018-07-18 12:43:40,293 INFO migrate_node.py 22 :time: migrate=1.85177397728
+2018-07-18 12:43:46,498 INFO edge_controller.py 247 process_signal {'service_name': 'yolo', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:43:46,501 INFO edge_controller.py 251 request discovery a service {'service_name': 'yolo', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:43:46,501 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:43:46,502 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:46,502 DEBUG config.py 28 No config file found
+2018-07-18 12:43:46,503 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:46,503 DEBUG config.py 28 No config file found
+2018-07-18 12:43:46,503 INFO edge_controller.py 149 check container name yolotest01enduser
+2018-07-18 12:43:46,506 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/yolotest01enduser/json HTTP/1.1" 200 None
+2018-07-18 12:43:46,508 INFO edge_controller.py 153 Detect the container yolotest01enduser for usertest01enduser.
+2018-07-18 12:43:46,508 DEBUG edge_controller.py 155 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb0aaf9390>]
+2018-07-18 12:43:46,508 DEBUG edge_controller.py 126 get_service yolo user_name test01enduser
+2018-07-18 12:43:46,508 DEBUG edge_controller.py 159 found available service ....{'container_img': 'ngovanmao/yolov3-mini-cpu-amd64:01', 'end_user': 'test01enduser', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9988, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'yolo', 'debug': True, 'port': 9903, 'user': 'root'}
+2018-07-18 12:43:46,508 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "ngovanmao/yolov3-mini-cpu-amd64:01", "end_user": "test01enduser", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9988, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "yolo", "debug": true, "port": 9903, "user": "root"}}
+2018-07-18 12:43:46,510 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:43:47,803 INFO edge_controller.py 273 process_signal {"serviceName":"yolo","end_user":"test01enduser","nearbyAP":[{"SSID":"docker3","BSSID":"52:3e:aa:49:87:7a","level":-62},{"SSID":"docker2","BSSID":"86:16:f9:0f:b5:ce","level":-58}],"currentRssi":-60}
+2018-07-18 12:43:47,804 DEBUG edge_controller.py 274 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb0aaf9390>]
+2018-07-18 12:43:47,805 INFO edge_controller.py 220 find service_name yolo of end_user test01enduser
+2018-07-18 12:43:47,805 DEBUG edge_controller.py 126 get_service yolo user_name test01enduser
+2018-07-18 12:43:47,805 DEBUG edge_controller.py 227 migrating_service name yolo IP: 10.0.99.10:9903
+2018-07-18 12:43:47,805 DEBUG edge_controller.py 239 migrate_plan.next_service_ip 10.0.99.11
+2018-07-18 12:43:47,805 INFO edge_controller.py 286 Start migrating a service to 10.0.99.11
+2018-07-18 12:43:47,806 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:47,806 DEBUG config.py 28 No config file found
+2018-07-18 12:43:47,806 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:43:47,806 DEBUG config.py 28 No config file found
+2018-07-18 12:43:47,806 DEBUG migrate_source.py 75 send msg: pull {"container_img": "ngovanmao/yolov3-mini-cpu-amd64:01", "end_user": "test01enduser", "ip": "10.0.99.11", "container_port": 9988, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9903, "snapshot": "snapshot", "service_name": "yolo", "method": "delta", "user": "root"} to 10.0.99.11 at port 5678
+2018-07-18 12:43:47,810 INFO migrate_source.py 196 return message from migrate_dest dest_port 9903
+2018-07-18 12:43:47,810 INFO edge_controller.py 304 Will send back payload: {"nextPassword": "10.0.99.11", "nextEdgePort": "9903", "elapsedTime": 3, "migration": true, "nextBSSID": "86:16:f9:0f:b5:ce", "nextEdgeIP": "10.0.99.11", "nextSSID": "docker2"}
+2018-07-18 12:43:47,811 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:43:47,813 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/json?all=1&limit=-1&filters=%7B%22name%22%3A+%5B%22yolotest01enduser%22%5D%7D&trunc_cmd=0&size=0 HTTP/1.1" 200 991
+2018-07-18 12:43:47,815 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/d2263155b575862737fc1330f0b8c452f5e014bea856027e61bae4355d28c630/json HTTP/1.1" 200 None
+2018-07-18 12:43:47,816 DEBUG migrate_source.py 90 docker checkpoint create --checkpoint-dir=/tmp/yolotest01enduser --leave-running yolotest01enduser snapshot_pre
+2018-07-18 12:43:48,362 INFO migrate_source.py 95 ['fdinfo-2.img', 'fs-1.img', 'pagemap-1.img', 'config.json', 'utsns-11.img', 'mm-1.img', 'pstree.img', 'fs-5.img', 'seccomp.img', 'pipes-data.img', 'tmpfs-dev-93.tar.gz.img', 'ipcns-var-10.img', 'netns-ct-9.img', 'mountpoints-12.img', 'inventory.img', 'files.img', 'ids-5.img', 'descriptors.json', 'core-1.img', 'mm-5.img', 'criu.work', 'tmpfs-dev-97.tar.gz.img', 'tmpfs-dev-96.tar.gz.img', 'core-5.img', 'pagemap-5.img', 'netns-exp-9.img', 'pages-2.img', 'fdinfo-3.img', 'cgroup.img', 'pages-1.img', 'ids-1.img']
+2018-07-18 12:43:48,363 INFO migrate_node.py 22 :time: pre-checkpoint=0.551236152649
+2018-07-18 12:43:48,363 DEBUG migrate_source.py 133 rsync -az /tmp/yolotest01enduser/snapshot_pre root@10.0.99.11:/tmp/yolotest01enduser/
+2018-07-18 12:43:54,838 DEBUG migrate_source.py 135 output: 
+2018-07-18 12:43:54,839 INFO migrate_node.py 22 :time: pre-rsync=6.47596096992
+2018-07-18 12:43:54,845 INFO migrate_node.py 25 :size: pre-rsync=162596651
+2018-07-18 12:43:54,845 INFO migrate_node.py 22 :time: prepare=7.03363704681
+2018-07-18 12:43:54,845 DEBUG migrate_source.py 101 docker checkpoint create --checkpoint-dir=/tmp/yolotest01enduser yolotest01enduser snapshot
+2018-07-18 12:43:55,098 DEBUG migrate_source.py 106 output: snapshot
+
+2018-07-18 12:43:55,099 INFO migrate_node.py 22 :time: checkpoint=0.253265142441
+2018-07-18 12:43:55,099 DEBUG migrate_source.py 152 rsync -az '-f- *.img' /tmp/yolotest01enduser/snapshot root@10.0.99.11:/tmp/yolotest01enduser/
+2018-07-18 12:43:55,409 INFO migrate_node.py 22 :time: rsync=0.310024023056
+2018-07-18 12:43:55,416 INFO migrate_node.py 25 :size: rsync=151423
+2018-07-18 12:43:58,141 INFO migrate_node.py 22 :time: xdelta_source=2.72459697723
+2018-07-18 12:43:58,141 DEBUG migrate_source.py 168 rsync -az /tmp/yolotest01enduser/snapshot_delta root@10.0.99.11:/tmp/yolotest01enduser/
+2018-07-18 12:43:58,486 DEBUG migrate_source.py 170 output: 
+2018-07-18 12:43:58,487 INFO migrate_node.py 22 :time: final_rsync=0.345574140549
+2018-07-18 12:43:58,492 INFO migrate_node.py 25 :size: final_rsync=9247
+2018-07-18 12:43:58,492 DEBUG migrate_source.py 81 send msg: migrate {"container_img": "ngovanmao/yolov3-mini-cpu-amd64:01", "end_user": "test01enduser", "ip": "10.0.99.11", "container_port": 9988, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9903, "snapshot": "snapshot", "service_name": "yolo", "method": "delta", "user": "root"} to 10.0.99.11 at port 5678
+2018-07-18 12:43:58,493 INFO migrate_node.py 22 :time: migrate=3.64727520943
+2018-07-18 12:44:02,160 INFO edge_controller.py 247 process_signal {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:44:02,162 INFO edge_controller.py 251 request discovery a service {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:44:02,162 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:44:02,163 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:02,164 DEBUG config.py 28 No config file found
+2018-07-18 12:44:02,164 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:02,164 DEBUG config.py 28 No config file found
+2018-07-18 12:44:02,165 INFO edge_controller.py 149 check container name openfacetest01enduser
+2018-07-18 12:44:02,168 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/openfacetest01enduser/json HTTP/1.1" 404 55
+2018-07-18 12:44:02,329 DEBUG connectionpool.py 393 http://localhost:None "POST /v1.35/containers/create?name=openfacetest01enduser HTTP/1.1" 201 90
+2018-07-18 12:44:02,333 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/e43c322beacba73739d2d68e955bfa5afa0ea02e3fa4715f42a3c9af81932570/json HTTP/1.1" 200 None
+2018-07-18 12:44:02,545 DEBUG connectionpool.py 393 http://localhost:None "POST /v1.35/containers/e43c322beacba73739d2d68e955bfa5afa0ea02e3fa4715f42a3c9af81932570/start HTTP/1.1" 204 0
+2018-07-18 12:44:02,545 DEBUG edge_controller.py 198 adding service ....{'container_img': 'ngovanmao/openface:12', 'end_user': 'test01enduser', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9999, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'openface', 'debug': True, 'port': 9901, 'user': 'root'}
+2018-07-18 12:44:02,545 DEBUG edge_controller.py 126 get_service openface user_name test01enduser
+2018-07-18 12:44:02,545 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "ngovanmao/openface:12", "end_user": "test01enduser", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9999, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "openface", "debug": true, "port": 9901, "user": "root"}}
+2018-07-18 12:44:02,546 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:44:05,159 INFO edge_controller.py 247 process_signal {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:44:05,160 INFO edge_controller.py 251 request discovery a service {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:44:05,160 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:44:05,160 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:05,160 DEBUG config.py 28 No config file found
+2018-07-18 12:44:05,161 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:05,161 DEBUG config.py 28 No config file found
+2018-07-18 12:44:05,161 INFO edge_controller.py 149 check container name openfacetest01enduser
+2018-07-18 12:44:05,163 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/openfacetest01enduser/json HTTP/1.1" 200 None
+2018-07-18 12:44:05,163 INFO edge_controller.py 153 Detect the container openfacetest01enduser for usertest01enduser.
+2018-07-18 12:44:05,163 DEBUG edge_controller.py 155 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb09603fd0>]
+2018-07-18 12:44:05,163 DEBUG edge_controller.py 126 get_service openface user_name test01enduser
+2018-07-18 12:44:05,163 DEBUG edge_controller.py 159 found available service ....{'container_img': 'ngovanmao/openface:12', 'end_user': 'test01enduser', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9999, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'openface', 'debug': True, 'port': 9901, 'user': 'root'}
+2018-07-18 12:44:05,164 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "ngovanmao/openface:12", "end_user": "test01enduser", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9999, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "openface", "debug": true, "port": 9901, "user": "root"}}
+2018-07-18 12:44:05,164 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:44:05,758 INFO edge_controller.py 247 process_signal {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:44:05,758 INFO edge_controller.py 251 request discovery a service {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:44:05,759 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:44:05,759 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:05,759 DEBUG config.py 28 No config file found
+2018-07-18 12:44:05,759 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:05,759 DEBUG config.py 28 No config file found
+2018-07-18 12:44:05,760 INFO edge_controller.py 149 check container name openfacetest01enduser
+2018-07-18 12:44:05,762 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/openfacetest01enduser/json HTTP/1.1" 200 None
+2018-07-18 12:44:05,762 INFO edge_controller.py 153 Detect the container openfacetest01enduser for usertest01enduser.
+2018-07-18 12:44:05,762 DEBUG edge_controller.py 155 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb09603fd0>]
+2018-07-18 12:44:05,762 DEBUG edge_controller.py 126 get_service openface user_name test01enduser
+2018-07-18 12:44:05,762 DEBUG edge_controller.py 159 found available service ....{'container_img': 'ngovanmao/openface:12', 'end_user': 'test01enduser', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9999, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'openface', 'debug': True, 'port': 9901, 'user': 'root'}
+2018-07-18 12:44:05,763 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "ngovanmao/openface:12", "end_user": "test01enduser", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9999, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "openface", "debug": true, "port": 9901, "user": "root"}}
+2018-07-18 12:44:05,763 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:44:06,342 INFO edge_controller.py 247 process_signal {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:44:06,343 INFO edge_controller.py 251 request discovery a service {'service_name': 'openface', 'end_user': 'test01enduser', 'associatedBSSID': '51:3e:aa:49:98:cb', 'associatedSSID': 'docker1'}
+2018-07-18 12:44:06,343 DEBUG edge_controller.py 259 found edge server for the requesting AP 10.0.99.10
+2018-07-18 12:44:06,343 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:06,344 DEBUG config.py 28 No config file found
+2018-07-18 12:44:06,344 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:06,344 DEBUG config.py 28 No config file found
+2018-07-18 12:44:06,344 INFO edge_controller.py 149 check container name openfacetest01enduser
+2018-07-18 12:44:06,346 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/openfacetest01enduser/json HTTP/1.1" 200 None
+2018-07-18 12:44:06,347 INFO edge_controller.py 153 Detect the container openfacetest01enduser for usertest01enduser.
+2018-07-18 12:44:06,347 DEBUG edge_controller.py 155 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb09603fd0>]
+2018-07-18 12:44:06,347 DEBUG edge_controller.py 126 get_service openface user_name test01enduser
+2018-07-18 12:44:06,347 DEBUG edge_controller.py 159 found available service ....{'container_img': 'ngovanmao/openface:12', 'end_user': 'test01enduser', 'ssid': 'docker1', 'bssid': '51:3e:aa:49:98:cb', 'ip': '10.0.99.10', 'container_port': 9999, 'method': 'delta', 'snapshot': 'snapshot', 'registry': 'ngovanmao', 'dump_dir': '/tmp', 'service_name': 'openface', 'debug': True, 'port': 9901, 'user': 'root'}
+2018-07-18 12:44:06,347 INFO edge_controller.py 268 Will send back payload: {"associated": true, "service": {"container_img": "ngovanmao/openface:12", "end_user": "test01enduser", "ssid": "docker1", "bssid": "51:3e:aa:49:98:cb", "ip": "10.0.99.10", "container_port": 9999, "method": "delta", "snapshot": "snapshot", "registry": "ngovanmao", "dump_dir": "/tmp", "service_name": "openface", "debug": true, "port": 9901, "user": "root"}}
+2018-07-18 12:44:06,347 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:44:13,503 INFO migrate_dest.py 166 Receive command from ('10.0.99.11', 57505) with pull {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.10", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"}
+
+2018-07-18 12:44:13,504 DEBUG migrate_dest.py 151 pull for service {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.10", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"}
+2018-07-18 12:44:13,507 INFO migrate_dest.py 139 port 9904 is available
+2018-07-18 12:44:13,517 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/json?all=1&limit=-1&filters=%7B%22name%22%3A+%5B%22simpletest01enduser%22%5D%7D&trunc_cmd=0&size=0 HTTP/1.1" 200 3
+2018-07-18 12:44:13,518 DEBUG migrate_dest.py 79 docker create --name simpletest01enduser -p 9904:9966 gochit/simple_tcp_service:latest
+2018-07-18 12:44:13,605 DEBUG migrate_dest.py 84 result = f94476bfba50db67a006296b0c2aaa2bcbd0363b58ab557592f8688a88b09a03
+
+2018-07-18 12:44:13,605 INFO migrate_node.py 22 :time: premigration=0.097473859787
+2018-07-18 12:44:15,602 INFO migrate_dest.py 166 Receive command from ('10.0.99.11', 57505) with migrate {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.10", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"}
+
+2018-07-18 12:44:15,602 DEBUG migrate_dest.py 159 migrating service {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.10", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"}
+2018-07-18 12:44:15,764 INFO migrate_node.py 22 :time: xdelta_dest=0.160995960236
+2018-07-18 12:44:15,764 DEBUG migrate_dest.py 98 docker start --checkpoint=snapshot --checkpoint-dir=/tmp/simpletest01enduser simpletest01enduser
+2018-07-18 12:44:16,058 DEBUG migrate_dest.py 103 result = 
+2018-07-18 12:44:16,059 INFO migrate_node.py 22 :time: restore=0.295027017593
+2018-07-18 12:44:16,059 DEBUG edge_controller.py 126 get_service simple user_name test01enduser
+2018-07-18 12:44:16,519 INFO edge_controller.py 273 process_signal {"serviceName":"simple","end_user":"test01enduser","nearbyAP":[{"SSID":"docker3","BSSID":"52:3e:aa:49:87:7a","level":-62},{"SSID":"docker3","BSSID":"86:16:f9:0f:b5:ce","level":-58}],"currentRssi":-60}
+2018-07-18 12:44:16,520 DEBUG edge_controller.py 274 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb09603fd0>, <migrate_node.MigrateNode object at 0x7feb0aaf9b90>]
+2018-07-18 12:44:16,528 INFO edge_controller.py 220 find service_name simple of end_user test01enduser
+2018-07-18 12:44:16,528 DEBUG edge_controller.py 126 get_service simple user_name test01enduser
+2018-07-18 12:44:16,528 DEBUG edge_controller.py 227 migrating_service name simple IP: 10.0.99.10:9904
+2018-07-18 12:44:16,528 DEBUG edge_controller.py 239 migrate_plan.next_service_ip 10.0.99.12
+2018-07-18 12:44:16,528 INFO edge_controller.py 286 Start migrating a service to 10.0.99.12
+2018-07-18 12:44:16,529 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:16,529 DEBUG config.py 28 No config file found
+2018-07-18 12:44:16,529 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:16,529 DEBUG config.py 28 No config file found
+2018-07-18 12:44:16,529 DEBUG migrate_source.py 75 send msg: pull {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.12", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"} to 10.0.99.12 at port 5678
+2018-07-18 12:44:16,541 INFO migrate_source.py 196 return message from migrate_dest dest_port 9904
+2018-07-18 12:44:16,541 INFO edge_controller.py 304 Will send back payload: {"nextPassword": "10.0.99.12", "nextEdgePort": "9904", "elapsedTime": 3, "migration": true, "nextBSSID": "86:16:f9:0f:b5:ce", "nextEdgeIP": "10.0.99.12", "nextSSID": "docker3"}
+2018-07-18 12:44:16,546 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:44:16,553 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/json?all=1&limit=-1&filters=%7B%22name%22%3A+%5B%22simpletest01enduser%22%5D%7D&trunc_cmd=0&size=0 HTTP/1.1" 200 902
+2018-07-18 12:44:16,607 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/f94476bfba50db67a006296b0c2aaa2bcbd0363b58ab557592f8688a88b09a03/json HTTP/1.1" 200 None
+2018-07-18 12:44:16,613 DEBUG migrate_source.py 90 docker checkpoint create --checkpoint-dir=/tmp/simpletest01enduser --leave-running simpletest01enduser snapshot_pre
+2018-07-18 12:44:16,773 INFO migrate_source.py 95 ['fdinfo-2.img', 'fs-1.img', 'pagemap-1.img', 'config.json', 'utsns-11.img', 'mm-1.img', 'tmpfs-dev-86.tar.gz.img', 'tmpfs-dev-89.tar.gz.img', 'pstree.img', 'tmpfs-dev-90.tar.gz.img', 'fs-5.img', 'seccomp.img', 'pipes-data.img', 'ipcns-var-10.img', 'netns-ct-9.img', 'mountpoints-12.img', 'inventory.img', 'files.img', 'ids-5.img', 'descriptors.json', 'core-1.img', 'mm-5.img', 'criu.work', 'core-5.img', 'pagemap-5.img', 'netns-exp-9.img', 'pages-2.img', 'fdinfo-3.img', 'cgroup.img', 'pages-1.img', 'ids-1.img']
+2018-07-18 12:44:16,774 INFO migrate_node.py 22 :time: pre-checkpoint=0.226321935654
+2018-07-18 12:44:16,774 DEBUG migrate_source.py 133 rsync -az /tmp/simpletest01enduser/snapshot_pre root@10.0.99.12:/tmp/simpletest01enduser/
+2018-07-18 12:44:17,567 DEBUG migrate_source.py 135 output: 
+2018-07-18 12:44:17,568 INFO migrate_node.py 22 :time: pre-rsync=0.794341087341
+2018-07-18 12:44:17,575 INFO migrate_node.py 25 :size: pre-rsync=9695844
+2018-07-18 12:44:17,576 INFO migrate_node.py 22 :time: prepare=1.02884221077
+2018-07-18 12:44:17,576 DEBUG migrate_source.py 101 docker checkpoint create --checkpoint-dir=/tmp/simpletest01enduser simpletest01enduser snapshot
+2018-07-18 12:44:17,723 DEBUG migrate_source.py 106 output: snapshot
+
+2018-07-18 12:44:17,723 INFO migrate_node.py 22 :time: checkpoint=0.146991968155
+2018-07-18 12:44:17,723 DEBUG migrate_source.py 152 rsync -az '-f- *.img' /tmp/simpletest01enduser/snapshot root@10.0.99.12:/tmp/simpletest01enduser/
+2018-07-18 12:44:18,045 INFO migrate_node.py 22 :time: rsync=0.321879863739
+2018-07-18 12:44:18,051 INFO migrate_node.py 25 :size: rsync=133392
+2018-07-18 12:44:18,238 INFO migrate_node.py 22 :time: xdelta_source=0.186442136765
+2018-07-18 12:44:18,239 DEBUG migrate_source.py 168 rsync -az /tmp/simpletest01enduser/snapshot_delta root@10.0.99.12:/tmp/simpletest01enduser/
+2018-07-18 12:44:18,546 DEBUG migrate_source.py 170 output: 
+2018-07-18 12:44:18,546 INFO migrate_node.py 22 :time: final_rsync=0.307640075684
+2018-07-18 12:44:18,553 INFO migrate_node.py 25 :size: final_rsync=17179
+2018-07-18 12:44:18,554 DEBUG migrate_source.py 81 send msg: migrate {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.12", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"} to 10.0.99.12 at port 5678
+2018-07-18 12:44:18,554 INFO migrate_node.py 22 :time: migrate=0.977658033371
+2018-07-18 12:44:22,585 INFO migrate_dest.py 166 Receive command from ('10.0.99.11', 48882) with pull {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.10", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"}
+
+2018-07-18 12:44:22,586 DEBUG migrate_dest.py 151 pull for service {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.10", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"}
+2018-07-18 12:44:22,590 INFO migrate_dest.py 139 port 9904 is available
+2018-07-18 12:44:22,607 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/json?all=1&limit=-1&filters=%7B%22name%22%3A+%5B%22simpletest01enduser%22%5D%7D&trunc_cmd=0&size=0 HTTP/1.1" 200 738
+2018-07-18 12:44:22,609 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/f94476bfba50db67a006296b0c2aaa2bcbd0363b58ab557592f8688a88b09a03/json HTTP/1.1" 200 None
+2018-07-18 12:44:22,610 INFO migrate_dest.py 74 Container is exist, try to remove it
+2018-07-18 12:44:22,622 DEBUG connectionpool.py 393 http://localhost:None "DELETE /v1.35/containers/f94476bfba50db67a006296b0c2aaa2bcbd0363b58ab557592f8688a88b09a03?force=True&link=False&v=False HTTP/1.1" 204 0
+2018-07-18 12:44:22,623 DEBUG migrate_dest.py 79 docker create --name simpletest01enduser -p 9904:9966 gochit/simple_tcp_service:latest
+2018-07-18 12:44:22,726 DEBUG migrate_dest.py 84 result = ae5f2b703e41700df835496504b9fa5a3dc6d7d9aeeeeb1527a65fca35284506
+
+2018-07-18 12:44:22,727 INFO migrate_node.py 22 :time: premigration=0.136595010757
+2018-07-18 12:44:24,615 INFO migrate_dest.py 166 Receive command from ('10.0.99.11', 48882) with migrate {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.10", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"}
+
+2018-07-18 12:44:24,616 DEBUG migrate_dest.py 159 migrating service {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.10", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"}
+2018-07-18 12:44:24,775 INFO migrate_node.py 22 :time: xdelta_dest=0.159230947495
+2018-07-18 12:44:24,775 DEBUG migrate_dest.py 98 docker start --checkpoint=snapshot --checkpoint-dir=/tmp/simpletest01enduser simpletest01enduser
+2018-07-18 12:44:25,074 DEBUG migrate_dest.py 103 result = 
+2018-07-18 12:44:25,074 INFO migrate_node.py 22 :time: restore=0.298942089081
+2018-07-18 12:44:25,074 DEBUG edge_controller.py 126 get_service simple user_name test01enduser
+2018-07-18 12:44:25,603 INFO edge_controller.py 273 process_signal {"serviceName":"simple","end_user":"test01enduser","nearbyAP":[{"SSID":"docker3","BSSID":"52:3e:aa:49:87:7a","level":-62},{"SSID":"docker2","BSSID":"86:16:f9:0f:b5:ce","level":-58}],"currentRssi":-60}
+2018-07-18 12:44:25,604 DEBUG edge_controller.py 274 current edge services [<migrate_node.MigrateNode object at 0x7feb0ab4a410>, <migrate_node.MigrateNode object at 0x7feb09603fd0>, <migrate_node.MigrateNode object at 0x7feb0aaf9b90>]
+2018-07-18 12:44:25,608 INFO edge_controller.py 220 find service_name simple of end_user test01enduser
+2018-07-18 12:44:25,615 DEBUG edge_controller.py 126 get_service simple user_name test01enduser
+2018-07-18 12:44:25,615 DEBUG edge_controller.py 227 migrating_service name simple IP: 10.0.99.10:9904
+2018-07-18 12:44:25,615 DEBUG edge_controller.py 239 migrate_plan.next_service_ip 10.0.99.11
+2018-07-18 12:44:25,616 INFO edge_controller.py 286 Start migrating a service to 10.0.99.11
+2018-07-18 12:44:25,616 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:25,616 DEBUG config.py 28 No config file found
+2018-07-18 12:44:25,617 DEBUG config.py 21 Trying paths: ['/root/.docker/config.json', '/root/.dockercfg']
+2018-07-18 12:44:25,617 DEBUG config.py 28 No config file found
+2018-07-18 12:44:25,617 DEBUG migrate_source.py 75 send msg: pull {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.11", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"} to 10.0.99.11 at port 5678
+2018-07-18 12:44:25,624 INFO migrate_source.py 196 return message from migrate_dest dest_port 9904
+2018-07-18 12:44:25,624 INFO edge_controller.py 304 Will send back payload: {"nextPassword": "10.0.99.11", "nextEdgePort": "9904", "elapsedTime": 3, "migration": true, "nextBSSID": "86:16:f9:0f:b5:ce", "nextEdgeIP": "10.0.99.11", "nextSSID": "docker2"}
+2018-07-18 12:44:25,626 INFO edge_controller.py 316 [-] close a socket and thread
+2018-07-18 12:44:25,629 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/json?all=1&limit=-1&filters=%7B%22name%22%3A+%5B%22simpletest01enduser%22%5D%7D&trunc_cmd=0&size=0 HTTP/1.1" 200 902
+2018-07-18 12:44:25,665 DEBUG connectionpool.py 393 http://localhost:None "GET /v1.35/containers/ae5f2b703e41700df835496504b9fa5a3dc6d7d9aeeeeb1527a65fca35284506/json HTTP/1.1" 200 None
+2018-07-18 12:44:25,671 DEBUG migrate_source.py 90 docker checkpoint create --checkpoint-dir=/tmp/simpletest01enduser --leave-running simpletest01enduser snapshot_pre
+2018-07-18 12:44:25,848 INFO migrate_source.py 95 ['fdinfo-2.img', 'fs-1.img', 'pagemap-1.img', 'config.json', 'utsns-11.img', 'mm-1.img', 'tmpfs-dev-86.tar.gz.img', 'tmpfs-dev-89.tar.gz.img', 'pstree.img', 'tmpfs-dev-90.tar.gz.img', 'fs-5.img', 'seccomp.img', 'pipes-data.img', 'ipcns-var-10.img', 'netns-ct-9.img', 'mountpoints-12.img', 'inventory.img', 'files.img', 'ids-5.img', 'descriptors.json', 'core-1.img', 'mm-5.img', 'criu.work', 'core-5.img', 'pagemap-5.img', 'netns-exp-9.img', 'pages-2.img', 'fdinfo-3.img', 'cgroup.img', 'pages-1.img', 'ids-1.img']
+2018-07-18 12:44:25,848 INFO migrate_node.py 22 :time: pre-checkpoint=0.221869945526
+2018-07-18 12:44:25,848 DEBUG migrate_source.py 133 rsync -az /tmp/simpletest01enduser/snapshot_pre root@10.0.99.11:/tmp/simpletest01enduser/
+2018-07-18 12:44:26,510 DEBUG migrate_source.py 135 output: 
+2018-07-18 12:44:26,510 INFO migrate_node.py 22 :time: pre-rsync=0.662191867828
+2018-07-18 12:44:26,517 INFO migrate_node.py 25 :size: pre-rsync=9697124
+2018-07-18 12:44:26,517 INFO migrate_node.py 22 :time: prepare=0.890912055969
+2018-07-18 12:44:26,517 DEBUG migrate_source.py 101 docker checkpoint create --checkpoint-dir=/tmp/simpletest01enduser simpletest01enduser snapshot
+2018-07-18 12:44:26,664 DEBUG migrate_source.py 106 output: snapshot
+
+2018-07-18 12:44:26,664 INFO migrate_node.py 22 :time: checkpoint=0.14688706398
+2018-07-18 12:44:26,664 DEBUG migrate_source.py 152 rsync -az '-f- *.img' /tmp/simpletest01enduser/snapshot root@10.0.99.11:/tmp/simpletest01enduser/
+2018-07-18 12:44:26,999 INFO migrate_node.py 22 :time: rsync=0.335068941116
+2018-07-18 12:44:27,004 INFO migrate_node.py 25 :size: rsync=133392
+2018-07-18 12:44:27,177 INFO migrate_node.py 22 :time: xdelta_source=0.172389984131
+2018-07-18 12:44:27,177 DEBUG migrate_source.py 168 rsync -az /tmp/simpletest01enduser/snapshot_delta root@10.0.99.11:/tmp/simpletest01enduser/
+2018-07-18 12:44:27,495 DEBUG migrate_source.py 170 output: 
+2018-07-18 12:44:27,495 INFO migrate_node.py 22 :time: final_rsync=0.318191051483
+2018-07-18 12:44:27,500 INFO migrate_node.py 25 :size: final_rsync=10718
+2018-07-18 12:44:27,501 DEBUG migrate_source.py 81 send msg: migrate {"container_img": "gochit/simple_tcp_service:latest", "end_user": "test01enduser", "ip": "10.0.99.11", "container_port": 9966, "registry": "ngovanmao", "dump_dir": "/tmp", "port": 9904, "snapshot": "snapshot", "service_name": "simple", "method": "delta", "user": "root"} to 10.0.99.11 at port 5678
+2018-07-18 12:44:27,501 INFO migrate_node.py 22 :time: migrate=0.98396396637

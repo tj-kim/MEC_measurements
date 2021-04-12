@@ -1,0 +1,10 @@
+*_test
+venv
+*.db*
+*.pyc
+*.md
+samples
+*.gz
+docker_test_service
+end-user
+

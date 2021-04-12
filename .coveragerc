@@ -1,0 +1,8 @@
+[run]
+omit =
+     unit_test/*
+     end-user/*
+     integration_test/*
+     deployment_test/*
+     docker_test_service/*
+     venv/*

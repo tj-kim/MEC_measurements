@@ -1,0 +1,624 @@
+cache:
+  paths:
+    - venv
+
+before_script:
+  - virtualenv venv --no-site-packages
+  - source venv/bin/activate
+  - pip install -r requirements.txt
+  - pip install -r ci_requirements.txt
+
+stages:
+  - unittest
+  - start_vm
+  - start_deploy_vm
+  - register_vm
+  - register_deploy_vm
+  - integration_test
+  - collect_log
+  - analyzed_results
+  - shutdown_vm
+  - configure_network
+  - deployment_simple
+  - deployment_test_simple
+  - deployment_test_log_simple
+  - restart_services_openface
+  - deployment_test
+  - deployment_test_log
+  - restart_services_yolo
+  - deployment_test_yolo
+  - deployment_test_log_yolo
+#  - deployment_analyze
+#  - deployment_analyze_yolo
+#  - deploy_full_analyze
+
+unittest:
+  stage: unittest
+  except:
+    - /^paper_setup_.*$/
+  script:
+    - source venv/bin/activate
+    - pytest -v docker_test_service
+    - pytest -v --cov-config .coveragerc --cov=. --cov-report term-missing -s unit_test
+
+start:
+  stage: start_vm
+  except:
+    - /^paper_setup_.*$/
+  script:
+    - VBoxManage list runningvms | sed "/integration_test/s/^.* //g" | xargs -I %s VBoxManage controlvm %s poweroff
+    - mkdir -p /home/sban/vagrant
+    - cp -r . /home/sban/vagrant
+    - pushd /home/sban/vagrant/integration_test
+    - vagrant up --provision --parallel
+    - popd
+
+start_deploy_vm:
+  stage: start_deploy_vm
+  only:
+    - /^paper_setup_.*$/
+  script:
+    - mkdir -p /home/sban/vagrant
+    - cp -r ../edgecomputing/* /home/sban/vagrant
+    - pushd /home/sban/vagrant/deployment_test
+    - vagrant up --provision --parallel
+    - popd
+
+register_deploy_vm:
+  stage: register_deploy_vm
+  only:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/deployment_test
+    - vagrant ssh centre -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh cloud -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker1 -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker2 -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker3 -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh centre -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh cloud -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker1 -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker2 -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker3 -c "sudo /mnt/edge/register_host.sh"
+    - popd
+
+register_vm:
+  stage: register_vm
+  except:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/integration_test
+    - vagrant ssh centre -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker1 -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker2 -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker3 -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh centre -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker1 -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker2 -c "sudo /mnt/edge/register_host.sh"
+    - vagrant ssh docker3 -c "sudo /mnt/edge/register_host.sh"
+    - popd
+
+integration_test:
+  stage: integration_test
+  except:
+    - /^paper_setup_.*$/
+  script:
+    - sleep 100
+    - source venv/bin/activate
+    - pytest -v -s integration_test
+    - pushd integration_test
+    - popd
+
+collect_log:
+  stage: collect_log
+  script:
+    - pushd /home/sban/vagrant/integration_test
+    - vagrant ssh centre -c "sudo cp /var/log/centre_edge.log /vagrant/"
+    - vagrant ssh centre -c "sudo cp /var/log/migrate_centre.log /vagrant"
+    - vagrant ssh docker1 -c "sudo cp /var/log/migrate_docker1.log /vagrant/"
+    - vagrant ssh docker2 -c "sudo cp /var/log/migrate_docker2.log /vagrant/"
+    - vagrant ssh docker3 -c "sudo cp /var/log/migrate_docker3.log /vagrant/"
+    - popd
+    - cp /home/sban/vagrant/integration_test/migrate_docker1.log integration_test/
+    - cp /home/sban/vagrant/integration_test/migrate_docker2.log integration_test/
+    - cp /home/sban/vagrant/integration_test/migrate_docker3.log integration_test/
+    - cp /home/sban/vagrant/integration_test/centre_edge.log integration_test/
+    - cp /home/sban/vagrant/integration_test/migrate_centre.log integration_test/
+  when: always
+  except:
+    - /^paper_setup_.*$/
+  artifacts:
+    paths:
+      - integration_test/migrate_docker*.log
+      - integration_test/centre_edge.log
+    expire_in: 3 weeks
+
+analyzed_results:
+  stage: analyzed_results
+  except:
+    - /^paper_setup_.*$/
+  script:
+    - source venv/bin/activate
+    - cp /home/sban/vagrant/integration_test/migrate_docker1.log integration_test/
+    - cp /home/sban/vagrant/integration_test/migrate_docker2.log integration_test/
+    - cp /home/sban/vagrant/integration_test/migrate_docker3.log integration_test/
+    - cp /home/sban/vagrant/integration_test/centre_edge.log integration_test/
+    - python log_parser.py --pattern="integration_test/migrate_docker*.log" --save=migrate_delays.csv --plot=migrate_delays.png
+  artifacts:
+    paths:
+      - migrate_delays.csv
+      - migrate_delays.png
+      - migrate_delays.eps
+      - migrate_delays_downtime.png
+      - migrate_delays_downtime.eps
+      - migrate_delays_size_final_rsync.png
+      - migrate_delays_size_final_rsync.eps
+      - migrate_delays_size_pre_rsync.png
+      - migrate_delays_size_pre_rsync.eps
+      - migrate_delays_size_rsync.png
+      - migrate_delays_size_rsync.eps
+    expire_in: 3 weeks
+
+
+shutdown_vm:
+  when: manual
+  stage: shutdown_vm
+  except:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/integration_test
+    - vagrant halt
+    - popd
+
+destroy_vm:
+  when: manual
+  stage: shutdown_vm
+  except:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/integration_test
+    - vagrant destroy
+    - popd
+
+build_docker:
+  when: manual
+  except:
+    - /^paper_setup_.*$/
+  stage: start_vm
+  script:
+    - pushd docker_test_service
+    - docker build -t gochit/simple_tcp_service .
+
+configure_network:
+  stage: configure_network
+  only:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/deployment_test
+    - vagrant ssh cloud -c 'sudo python /opt/edge/setup_network_metrics.py --dev enp0s8 add --name $HOSTNAME --conf /opt/edge/edge_nodes.yml'
+    - vagrant ssh docker1 -c 'sudo python /opt/edge/setup_network_metrics.py --dev enp0s8 add --name $HOSTNAME --conf /opt/edge/edge_nodes.yml'
+    - vagrant ssh docker2 -c 'sudo python /opt/edge/setup_network_metrics.py --dev enp0s8 add --name $HOSTNAME --conf /opt/edge/edge_nodes.yml'
+    - vagrant ssh docker3 -c 'sudo python /opt/edge/setup_network_metrics.py --dev enp0s8 add --name $HOSTNAME --conf /opt/edge/edge_nodes.yml'
+    - popd
+
+#configure_network:
+#  stage: configure_network
+#  only:
+#    - master@ngovanmao/edgecomputing
+#    - maongo_integration@ngovanmao/edgecomputing
+#    - /^paper_setup_.*$/
+#  script:
+#    - rsync -az --exclude-from=exclude_files --delete . rootcentre:/opt/edge/
+#    - rsync -az --exclude-from=exclude_files --delete . rootdevbox:/opt/edge/
+#    - rsync -az --exclude-from=exclude_files --delete . rootedge1:/opt/edge/
+#    - rsync -az --exclude-from=exclude_files --delete . rootedge2:/opt/edge/
+#    - rsync -az --exclude-from=exclude_files --delete . rootedge3:/opt/edge/
+#    - ssh rootdevbox 'python /opt/edge/setup_network_metrics.py --dev enp14s0 add --name $HOSTNAME --conf /opt/edge/real_edge_nodes.yml'
+#    - ssh rootedge1 'python /opt/edge/setup_network_metrics.py --dev eno1 add --name $HOSTNAME --conf /opt/edge/real_edge_nodes.yml'
+#    - ssh rootedge2 'python /opt/edge/setup_network_metrics.py --dev eno1 add --name $HOSTNAME --conf /opt/edge/real_edge_nodes.yml'
+#    - ssh rootedge3 'python /opt/edge/setup_network_metrics.py --dev eno1 add --name $HOSTNAME --conf /opt/edge/real_edge_nodes.yml'
+#
+.deploy_common: &deploy_common
+  script:
+    - rsync -az --exclude-from=exclude_files --delete . rootcentre:/opt/edge/
+    - rsync -az --exclude-from=exclude_files --delete . rootdevbox:/opt/edge/
+    - rsync -az --exclude-from=exclude_files --delete . rootedge1:/opt/edge/
+    - rsync -az --exclude-from=exclude_files --delete . rootedge2:/opt/edge/
+    - rsync -az --exclude-from=exclude_files --delete . rootedge3:/opt/edge/
+    - ssh rootcentre bash service centre_edge stop
+    - ssh rootdevbox bash service migrate stop
+    - ssh rootedge1 bash service migrate stop
+    - ssh rootedge2 bash service migrate stop
+    - ssh rootedge3 bash service migrate stop
+    - ssh rootcentre 'cd /opt/edge/; bash /opt/edge/setup_centre.sh'
+    - ssh rootdevbox 'cd /opt/edge/; bash /opt/edge/setup_edgenode.sh -d 0'
+    - ssh rootedge1  'cd /opt/edge/; bash /opt/edge/setup_edgenode.sh -d 2'
+    - ssh rootedge2  'cd /opt/edge/; bash /opt/edge/setup_edgenode.sh -d 2'
+    - ssh rootedge3  'cd /opt/edge/; bash /opt/edge/setup_edgenode.sh -d 2'
+    - sleep 20
+    - ssh rootdevbox bash service migrate status
+    - ssh rootedge1 bash service migrate status
+    - ssh rootedge2 bash service migrate status
+    - ssh rootedge3 bash service migrate status
+    - ssh rootcentre bash service centre_edge status
+
+deploy_simple:
+  stage: deployment_simple
+  <<: *deploy_common
+  only:
+    - master@ngovanmao/edgecomputing
+    - maongo_integration@ngovanmao/edgecomputing
+
+.restart_services: &restart_services
+  script:
+    - ssh rootdevbox bash service migrate restart
+    - ssh rootedge1 bash service migrate restart
+    - ssh rootedge2 bash service migrate restart
+    - ssh rootedge3 bash service migrate restart
+    - ssh rootcentre bash service centre_edge restart
+    - sleep 20
+  only:
+    - master@ngovanmao/edgecomputing
+    - maongo_integration@ngovanmao/edgecomputing
+
+.restart_services_vm: &restart_services_vm
+  only:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/deployment_test
+    - vagrant ssh centre -c 'sudo service centre_edge restart'
+    - vagrant ssh cloud -c 'sudo service migrate restart'
+    - vagrant ssh docker1 -c 'sudo service migrate restart'
+    - vagrant ssh docker2 -c 'sudo service migrate restart'
+    - vagrant ssh docker3 -c 'sudo service migrate restart'
+    - sleep 20
+    - popd
+
+restart_services_openface_vm:
+  stage: restart_services_openface
+  <<: *restart_services_vm
+
+restart_services_yolo_vm:
+  stage: restart_services_yolo
+  <<: *restart_services_vm
+
+restart_services_openface_real:
+  stage: restart_services_openface
+  <<: *restart_services
+
+restart_services_yolo_real:
+  stage: restart_services_yolo
+  <<: *restart_services
+
+
+#deploy_master:
+#  stage: deployment
+#  <<: *deploy_common
+#  only:
+#    - master@ngovanmao/edgecomputing
+#    - maongo_integration@ngovanmao/edgecomputing
+#    - /^paper_setup_.*$/
+#    #refs:
+#    #  - master
+
+#deploy_yolo:
+#  stage: deployment_yolo
+#  <<: *deploy_common
+#  only:
+#    - master@ngovanmao/edgecomputing
+#    - maongo_integration@ngovanmao/edgecomputing
+#    - /^paper_setup_.*$/
+
+#deploy_manual:
+#  stage: deployment
+#  <<: *deploy_common
+#  when: manual
+
+
+.deployment_test_common: &deploy_test_common
+  script:
+    - source venv/bin/activate
+    - pwd
+    - python end-user/simulated_mobile_eu.py --save e2e_delay_openface.log --conf real_edge_nodes.yml --time 400 --level INFO --level_file DEBUG
+  artifacts:
+    paths:
+      - e2e_delay*.log
+      - eu_*.db
+    expire_in: 8 weeks
+
+deploy_test_openface_vm:
+  stage: deployment_test
+  only:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/deployment_test
+    - vagrant ssh enduser -c 'sudo python /opt/edge/end-user/simulated_mobile_eu.py --conf /opt/edge/edge_nodes.yml --time 400'
+    - vagrant ssh enduser -c "cp ~/e2e_delay.log /vagrant/e2e_delay_openface.log"
+    - vagrant ssh enduser -c "cp ~/eu_*.db /vagrant/"
+    - popd
+    - cp /home/sban/vagrant/deployment_test/e2e_delay_openface.log .
+    - cp /home/sban/vagrant/deployment_test/eu_*.db .
+  artifacts:
+    paths:
+      - e2e_delay_openface.log
+      - eu_*.db
+    expire_in: 8 weeks
+
+deploy_test_master:
+  <<: *deploy_test_common
+  stage: deployment_test
+  only:
+    - master@ngovanmao/edgecomputing
+    - maongo_integration@ngovanmao/edgecomputing
+ 
+
+#deploy_test_manual:
+#  <<: *deploy_test_common
+#  stage: deployment_test
+#  when: manual
+
+deploy_test_simple_vm:
+  stage: deployment_test_simple
+  only:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/deployment_test
+    - vagrant ssh enduser -c 'sudo python /opt/edge/end-user/simulated_mobile_eu.py --conf /opt/edge/edge_nodes_simple.yml --time 400'
+    - vagrant ssh enduser -c "cp ~/e2e_delay.log /vagrant/e2e_delay_simple.log"
+    - vagrant ssh enduser -c "cp ~/eu_*_simple.db /vagrant/"
+    - popd
+    - cp /home/sban/vagrant/deployment_test/e2e_delay_simple.log .
+    - cp /home/sban/vagrant/deployment_test/eu_*_simple.db .
+  artifacts:
+    paths:
+      - e2e_delay_simple.log
+      - eu_*_simple.db
+    expire_in: 8 weeks
+
+#deploy_test_simple:
+#  stage: deployment_test_simple
+#  when: manual
+#  script:
+#    - source venv/bin/activate
+#    - pwd
+#    - python end-user/simulated_mobile_eu.py --save e2e_delay_simple.log --conf real_edge_nodes_simple.yml --time 400 --level INFO --level_file DEBUG
+#  artifacts:
+#    paths:
+#      - e2e_delay_simple.log
+#      - eu_*_simple.db
+#    expire_in: 8 weeks
+
+deploy_test_yolo_vm:
+  stage: deployment_test_yolo
+  only:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/deployment_test
+    - vagrant ssh enduser -c 'sudo python /opt/edge/end-user/simulated_mobile_eu.py --conf /opt/edge/edge_nodes_yolo.yml --time 400'
+    - vagrant ssh enduser -c "cp ~/e2e_delay.log /vagrant/e2e_delay_yolo.log"
+    - vagrant ssh enduser -c "cp ~/eu_*_yolo.db /vagrant/"
+    - popd
+    - cp /home/sban/vagrant/deployment_test/e2e_delay_yolo.log .
+    - cp /home/sban/vagrant/deployment_test/eu_*_yolo.db .
+  artifacts:
+    paths:
+      - e2e_delay_yolo.log
+      - eu_*_yolo.db
+    expire_in: 8 weeks
+
+#deploy_test_yolo:
+#  stage: deployment_test_yolo
+#  when: manual
+#  script:
+#    - source venv/bin/activate
+#    - pwd
+#    - python end-user/simulated_mobile_eu.py --save e2e_delay_yolo.log --conf real_edge_nodes_yolo.yml --time 400 --level INFO --level_file DEBUG
+#  artifacts:
+#    paths:
+#      - e2e_delay_yolo.log
+#      - eu_*_yolo.db
+#    expire_in: 8 weeks
+ 
+
+.deployment_test_log_common: &deployment_test_log_common
+  script:
+    - scp rootcentre:/var/log/centre_edge.log deployment_test/
+    - scp rootcentre:/var/log/centre_edge.db deployment_test/
+    - scp rootdevbox:/var/log/migrate_*.log deployment_test/
+    - scp rootedge1:/var/log/migrate_*.log deployment_test/
+    - scp rootedge2:/var/log/migrate_*.log deployment_test/
+    - scp rootedge3:/var/log/migrate_*.log deployment_test/
+  artifacts:
+    paths:
+      - deployment_test/*.log
+      - deployment_test/centre_edge.db
+    expire_in: 8 weeks
+
+deploy_test_log_master:
+  <<: *deployment_test_log_common
+  stage: deployment_test_log
+  only:
+    - master@ngovanmao/edgecomputing
+    - maongo_integration@ngovanmao/edgecomputing
+  when: always
+
+#deploy_test_log_manual:
+#  <<: *deployment_test_log_common
+#  stage: deployment_test_log
+#  when: manual
+
+deploy_get_log_openface_vm:
+  stage: deployment_test_log
+  only:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/deployment_test
+    - vagrant ssh centre -c "cp /var/log/centre_edge.log /vagrant/centre_edge_openface.log"
+    - vagrant ssh centre -c "cp /var/log/centre_edge.db /vagrant/centre_edge_openface.db"
+    - vagrant ssh cloud -c "cp /var/log/migrate_*.log /vagrant/migrate_cloud_openface.log"
+    - vagrant ssh docker1 -c "cp /var/log/migrate_*.log /vagrant/migrate_docker1_openface.log"
+    - vagrant ssh docker2 -c "cp /var/log/migrate_*.log /vagrant/migrate_docker2_openface.log"
+    - vagrant ssh docker3 -c "cp /var/log/migrate_*.log /vagrant/migrate_docker3_openface.log"
+    - popd
+    - cp /home/sban/vagrant/deployment_test/centre_edge_openface.log .
+    - cp /home/sban/vagrant/deployment_test/centre_edge_openface.db .
+    - cp /home/sban/vagrant/deployment_test/migrate_*_openface.log .
+  artifacts:
+    paths:
+      - centre_edge_openface.log
+      - centre_edge_openface.db
+      - migrate_*_openface.log 
+    expire_in: 8 weeks
+  when: always
+
+deploy_get_log_simple:
+  stage: deployment_test_log_simple
+  only:
+    - master@ngovanmao/edgecomputing
+    - maongo_integration@ngovanmao/edgecomputing
+  script:
+    - scp rootcentre:/var/log/centre_edge.log deployment_test/centre_edge_simple.log
+    - scp rootcentre:/var/log/centre_edge.db deployment_test/centre_edge_simple.db
+    - scp rootdevbox:/var/log/migrate_*.log deployment_test/migrate_wnds-devbox_simple.log
+    - scp rootedge1:/var/log/migrate_*.log deployment_test/migrate_Edge1-OptiPlex-9020_simple.log
+    - scp rootedge2:/var/log/migrate_*.log deployment_test/migrate_Edge2-Optiplex9020_simple.log
+    - scp rootedge3:/var/log/migrate_*.log deployment_test/migrate_Edge3-OptiPlex-9020_simple.log
+  artifacts:
+    paths:
+      - deployment_test/*_simple.log
+      - deployment_test/centre_edge_simple.db
+    expire_in: 8 weeks
+  when: always
+
+deploy_get_log_simple_vm:
+  stage: deployment_test_log_simple
+  only:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/deployment_test
+    - vagrant ssh centre -c "cp /var/log/centre_edge.log /vagrant/centre_edge_simple.log"
+    - vagrant ssh centre -c "cp /var/log/centre_edge.db /vagrant/centre_edge_simple.db"
+    - vagrant ssh cloud -c "cp /var/log/migrate_*.log /vagrant/migrate_cloud_simple.log"
+    - vagrant ssh docker1 -c "cp /var/log/migrate_*.log /vagrant/migrate_docker1_simple.log"
+    - vagrant ssh docker2 -c "cp /var/log/migrate_*.log /vagrant/migrate_docker2_simple.log"
+    - vagrant ssh docker3 -c "cp /var/log/migrate_*.log /vagrant/migrate_docker3_simple.log"
+    - popd
+    - cp /home/sban/vagrant/deployment_test/centre_edge_simple.log .
+    - cp /home/sban/vagrant/deployment_test/centre_edge_simple.db .
+    - cp /home/sban/vagrant/deployment_test/migrate_*_simple.log .
+  artifacts:
+    paths:
+      - centre_edge_simple.log
+      - centre_edge_simple.db
+      - migrate_*_simple.log 
+    expire_in: 8 weeks
+  when: always
+
+
+deploy_get_log_yolo:
+  stage: deployment_test_log_yolo
+  only:
+    - master@ngovanmao/edgecomputing
+    - maongo_integration@ngovanmao/edgecomputing
+  script:
+    - scp rootcentre:/var/log/centre_edge.log deployment_test/centre_edge_yolo.log
+    - scp rootcentre:/var/log/centre_edge.db deployment_test/centre_edge_yolo.db
+    - scp rootdevbox:/var/log/migrate_*.log deployment_test/migrate_wnds-devbox_yolo.log
+    - scp rootedge1:/var/log/migrate_*.log deployment_test/migrate_Edge1-OptiPlex-9020_yolo.log
+    - scp rootedge2:/var/log/migrate_*.log deployment_test/migrate_Edge2-Optiplex9020_yolo.log
+    - scp rootedge3:/var/log/migrate_*.log deployment_test/migrate_Edge3-OptiPlex-9020_yolo.log
+  artifacts:
+    paths:
+      - deployment_test/*_yolo.log
+      - deployment_test/centre_edge_yolo.db
+    expire_in: 8 weeks
+  when: always
+
+deploy_get_log_yolo_vm:
+  stage: deployment_test_log_yolo
+  only:
+    - /^paper_setup_.*$/
+  script:
+    - pushd /home/sban/vagrant/deployment_test
+    - vagrant ssh centre -c "cp /var/log/centre_edge.log /vagrant/centre_edge_yolo.log"
+    - vagrant ssh centre -c "cp /var/log/centre_edge.db /vagrant/centre_edge_yolo.db"
+    - vagrant ssh cloud -c "cp /var/log/migrate_*.log /vagrant/migrate_cloud_yolo.log"
+    - vagrant ssh docker1 -c "cp /var/log/migrate_*.log /vagrant/migrate_docker1_yolo.log"
+    - vagrant ssh docker2 -c "cp /var/log/migrate_*.log /vagrant/migrate_docker2_yolo.log"
+    - vagrant ssh docker3 -c "cp /var/log/migrate_*.log /vagrant/migrate_docker3_yolo.log"
+    - popd
+    - cp /home/sban/vagrant/deployment_test/centre_edge_yolo.log .
+    - cp /home/sban/vagrant/deployment_test/centre_edge_yolo.db .
+    - cp /home/sban/vagrant/deployment_test/migrate_*_yolo.log .
+  artifacts:
+    paths:
+      - centre_edge_yolo.log
+      - centre_edge_yolo.db
+      - migrate_*_simple.log 
+    expire_in: 8 weeks
+  when: always
+
+#.deploy_analyze_common: &deploy_analyze_common
+#  script:
+#    - source venv/bin/activate
+#    - python log_parser.py --pattern="deployment_test/migrate_*.log" --nodes=real_edge_nodes.yml --save=real_migrate_delays.csv --plot=real_migrate_delays.png
+#  artifacts:
+#    paths:
+#      - real_migrate_delays.csv
+#      - real_migrate_delays.png
+#      - real_migrate_delays.eps
+#      - real_migrate_delays_downtime.png
+#      - real_migrate_delays_downtime.eps
+#      - real_migrate_delays_size_final_rsync.png
+#      - real_migrate_delays_size_final_rsync.eps
+#      - real_migrate_delays_size_pre_rsync.png
+#      - real_migrate_delays_size_pre_rsync.eps
+#      - real_migrate_delays_size_rsync.png
+#      - real_migrate_delays_size_rsync.eps
+#    expire_in: 8 weeks
+#
+#deploy_analyze_master:
+#  <<: *deploy_analyze_common
+#  stage: deployment_analyze
+#  only:
+#    - master@ngovanmao/edgecomputing
+#    - maongo_integration@ngovanmao/edgecomputing
+#    - /^paper_setup_.*$/
+#
+#deploy_analyze_manual:
+#  <<: *deploy_analyze_common
+#  stage: deployment_analyze
+#  when: manual
+#
+#deploy_analyze_yolo:
+#  stage: deployment_analyze_yolo
+#  only:
+#    - master@ngovanmao/edgecomputing
+#    - maongo_integration@ngovanmao/edgecomputing
+#    - /^paper_setup_.*$/
+#  script:
+#    - source venv/bin/activate
+#    - python log_parser.py --pattern="deployment_test/migrate_*yolo.log" --nodes=real_edge_nodes_yolo.yml --save=yolo_real_migrate_delays.csv --plot=yolo_real_migrate_delays.png
+#  artifacts:
+#    paths:
+#      - yolo_real_migrate_delays.csv
+#      - yolo_real_migrate_delays.png
+#      - yolo_real_migrate_delays.eps
+#      - yolo_real_migrate_delays_downtime.png
+#      - yolo_real_migrate_delays_downtime.eps
+#      - yolo_real_migrate_delays_size_final_rsync.png
+#      - yolo_real_migrate_delays_size_final_rsync.eps
+#      - yolo_real_migrate_delays_size_pre_rsync.png
+#      - yolo_real_migrate_delays_size_pre_rsync.eps
+#      - yolo_real_migrate_delays_size_rsync.png
+#      - yolo_real_migrate_delays_size_rsync.eps
+#    expire_in: 8 weeks
+#
+#deploy_full_analyze:
+#  stage: deploy_full_analyze
+#  only:
+#    - master@ngovanmao/edgecomputing
+#    - maongo_integration@ngovanmao/edgecomputing
+#    - /^paper_setup_.*$/
+#  script:
+#    - echo "to be done"

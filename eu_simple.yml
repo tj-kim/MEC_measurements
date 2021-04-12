@@ -1,0 +1,19 @@
+end_users:
+  - name: 'sim_eu_simple'
+    service: 'simple'
+    moving:
+      type: 'simple_roundtrip'
+      wait_time: 0
+      velocity: 0.5
+      start_point: 0.0
+      stop_point: 270.0
+    metrics:
+      - name: 'edge01'
+        bw: 100
+        delay: 10
+      - name: 'edge02'
+        bw: 100
+        delay: 10
+      - name: 'edge03'
+        bw: 100
+        delay: 10

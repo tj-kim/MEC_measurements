@@ -1,0 +1,14 @@
+sqlalchemy
+sqlalchemy-utils
+flask-sqlalchemy
+pyyaml
+paho-mqtt
+docker
+joblib
+docker-compose
+pulp
+psutil
+numpy
+sympy
+scipy==1.2.2
+scikit-learn==0.20.3

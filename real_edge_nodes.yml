@@ -1,0 +1,182 @@
+centre:
+  - name: 'Centre-OptiPlex-9020'
+    ip: 172.18.35.196
+
+placement_bs:
+  model: 'manual'
+  number_bs: 4
+  distance_bs: 70.0
+
+aps:
+  - name: 'edge01'
+    bssid: '51:3e:aa:49:98:cb'
+    passwd: ''
+    server: 'Edge1-OptiPlex-9020'
+    x: 30
+    y: 0
+  - name: 'edge02'
+    bssid: '52:3e:aa:49:98:cb'
+    passwd: ''
+    server: 'Edge2-Optiplex9020'
+    x: 100
+    y: 0
+  - name: 'edge03'
+    bssid: '53:3e:aa:49:98:cb'
+    passwd: ''
+    server: 'Edge3-OptiPlex-9020'
+    x: 170
+    y: 0
+  - name: 'edge04'
+    bssid: '48:4d:7e:ec:2e:cb'
+    passwd: ''
+    server: 'edge04-OptiPlex-7040'
+    x: 240
+    y: 0
+
+# Homogeneous network
+# Bandwidth in Mbps
+bw: &bw 100
+bw2: &bw2 75
+bw3: &bw3 50
+# Delay in millisecond
+delay: &delay 25
+delay2: &delay2 75 #75 ms Cloudcmp: comparing public cloud providers, SIGCOM 2010.
+delay3: &delay3 75
+# Heterogeneous network for edge02
+bw_het: &bw_het 30
+delay_het: &delay_het 25
+
+# Benchmark with: sysbench --test=cpu --cpu-max-prime=20000 --num-threads=<cores> run
+# The numbers in benchmark fields are total time
+
+servers:
+  - name: 'edgeL1-Tower7810' # Cloud server
+    ip: 172.18.240.198
+    benchmark: 1.1033 # Prime: 20000
+    core: 32
+    metrics:
+      - name: 'wnds-devbox'
+        bw: *bw2
+        delay: *delay2
+      - name: 'Edge1-OptiPlex-9020'
+        bw: *bw3
+        delay: *delay3
+      - name: 'Edge2-Optiplex9020'
+        bw: *bw3
+        delay: *delay3
+      - name: 'Edge3-OptiPlex-9020'
+        bw: *bw3
+        delay: *delay3
+      - name: 'edge04-OptiPlex-7040'
+        bw: *bw3
+        delay: *delay3
+  - name: 'wnds-devbox' # Layer 1
+    ip: 172.18.43.227
+    phi: 0.0760752144777654
+    rho: 0.8644910736109704
+    benchmark: 2.38008 # 1.9788 # Prime: 20000
+    core: 12
+    metrics:
+      - name: 'edgeL1-Tower7810'
+        bw: *bw2
+        delay: *delay2
+      - name: 'Edge1-OptiPlex-9020'
+        bw: *bw2
+        delay: *delay2
+      - name: 'Edge2-Optiplex9020'
+        bw: *bw2
+        delay: *delay2
+      - name: 'Edge3-OptiPlex-9020'
+        bw: *bw2
+        delay: *delay2
+      - name: 'edge04-OptiPlex-7040'
+        bw: *bw2
+        delay: *delay2
+  - name: 'Edge1-OptiPlex-9020'
+    ip: 172.18.33.43
+    phi: 0.05059918470256535
+    rho: 0.5749907352564244
+    benchmark: 2.9751 # Prime: 20000
+    core: 8
+    metrics: 
+      - name: 'edgeL1-Tower7810'
+        bw: *bw3
+        delay: *delay3
+      - name: 'wnds-devbox'
+        bw: *bw2
+        delay: *delay2
+      - name: 'Edge2-Optiplex9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge3-OptiPlex-9020'
+        bw: *bw
+        delay: *delay
+      - name: 'edge04-OptiPlex-7040'
+        bw: *bw
+        delay: *delay
+  - name: 'Edge2-Optiplex9020'
+    ip: 172.18.35.82
+    phi: 0.05059918470256535
+    rho: 0.5749907352564244
+    benchmark: 2.9751 # Prime: 20000
+    core: 8
+    metrics:
+      - name: 'edgeL1-Tower7810'
+        bw: *bw3
+        delay: *delay3
+      - name: 'wnds-devbox'
+        bw: *bw2
+        delay: *delay2
+      - name: 'Edge1-OptiPlex-9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge3-OptiPlex-9020'
+        bw: *bw
+        delay: *delay
+      - name: 'edge04-OptiPlex-7040'
+        bw: *bw
+        delay: *delay
+  - name: 'Edge3-OptiPlex-9020'
+    ip: 172.18.37.137
+    phi: 0.05059918470256535
+    rho: 0.5749907352564244
+    benchmark: 2.9751 # Prime:20000
+    core: 8
+    metrics:
+      - name: 'edgeL1-Tower7810'
+        bw: *bw3
+        delay: *delay3
+      - name: 'wnds-devbox'
+        bw: *bw2
+        delay: *delay2
+      - name: 'Edge2-Optiplex9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge1-OptiPlex-9020'
+        bw: *bw
+        delay: *delay
+      - name: 'edge04-OptiPlex-7040'
+        bw: *bw
+        delay: *delay
+  - name: 'edge04-OptiPlex-7040'
+    ip: 172.18.39.89
+    phi: 0.05059918470256535
+    rho: 0.5749907352564244
+    benchmark: 2.9751 # Prime:20000
+    core: 8
+    metrics:
+      - name: 'edgeL1-Tower7810'
+        bw: *bw3
+        delay: *delay3
+      - name: 'wnds-devbox'
+        bw: *bw2
+        delay: *delay2
+      - name: 'Edge2-Optiplex9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge1-OptiPlex-9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge3-OptiPlex-9020'
+        bw: *bw
+        delay: *delay

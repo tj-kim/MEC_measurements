@@ -1,0 +1,57 @@
+Vagrant.configure("2") do |config|
+
+  required_plugins = %w( vagrant-vbguest vagrant-disksize)
+  _retry = false
+  required_plugins.each do |plugin|
+      unless Vagrant.has_plugin? plugin
+          system "vagrant plugin install #{plugin}"
+          _retry=true
+      end
+  end
+
+  if (_retry)
+      exec "vagrant " + ARGV.join(' ')
+  end
+
+  config.vm.box = "ubuntu/xenial64"
+  config.vm.network "public_network"
+
+  config.vm.synced_folder "../", "/mnt/edge/"
+  config.vm.provision "file", source: "../requirements.txt", destination: "requirements.txt"
+  config.vm.provision "file", source: "./wpa_supplicant.conf", destination: "wpa_supplicant.conf"
+
+  config.vm.network "forwarded_port", guest: 9999, host: 9999, host_ip: "127.0.0.1",
+                    auto_correct: true
+
+  config.vm.define :null1 do |null1|
+    null1.vm.hostname = "null1"
+    (9900..9909).each do |request_port|
+      null1.vm.network "forwarded_port", guest: request_port, host: request_port,
+                       host_ip: "127.0.0.1", auto_correct: true
+    end
+    null1.vm.provision "shell" do |s|
+        s.path = "../setup_edgenode.sh"
+        s.args = ["-p", "-n", "edge05"]
+        s.env = {"DISTANCE"=>"2"}
+    end
+    null1.vm.provision "shell", inline: "wpa_supplicant -D wired -B -i enp0s8 -c wpa_supplicant.conf"
+    null1.vm.provision "shell", inline: "echo ssid=edge05 > /etc/hostapd/hostapd.conf"
+  end
+
+  config.vm.define :null2 do |null2|
+    null2.vm.hostname = "null2"
+    (9900..9909).each do |request_port|
+      null2.vm.network "forwarded_port", guest: request_port, host: request_port,
+                       host_ip: "127.0.0.1", auto_correct: true
+    end
+    null2.vm.provision "shell" do |s|
+        s.path = "../setup_edgenode.sh"
+        s.args = ["-p", "-n", "edge06"]
+        s.env = {"DISTANCE"=>"2"}
+    end
+    null2.vm.provision "shell", inline: "wpa_supplicant -D wired -B -i enp0s8 -c wpa_supplicant.conf"
+    null2.vm.provision "shell", inline: "echo ssid=edge06 > /etc/hostapd/hostapd.conf"
+  end
+
+
+end

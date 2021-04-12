@@ -1,0 +1,11 @@
+pytest
+pytest-cov
+pytest-timeout
+mock
+tornado
+numpy
+matplotlib < 3.0
+numpy
+psutil
+sklearn
+pandas

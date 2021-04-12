@@ -1,0 +1,6 @@
+*.pyc
+*.db*
+*.log*
+*.png
+*.eps
+/venv/

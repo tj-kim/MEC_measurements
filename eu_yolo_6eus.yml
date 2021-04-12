@@ -1,0 +1,123 @@
+end_users:
+  - name: 'sim_eu_yolo'
+    service: 'yolo'
+    moving:
+      type: 'simple_roundtrip'
+      wait_time: 30
+      velocity: 0.5
+      start_point: 0.0
+      stop_point: 270.0
+      y: 75.0
+    metrics:
+      - name: 'edge01'
+        bw: 100
+        delay: 10
+      - name: 'edge02'
+        bw: 100
+        delay: 10
+      - name: 'edge03'
+        bw: 100
+        delay: 10
+      - name: 'edge04'
+        bw: 100
+        delay: 10
+
+  - name: 'sim_stand1'
+    service: 'openface'
+    moving:
+      type: 'simple_roundtrip'
+      wait_time: 30
+      velocity: 0
+      start_point: 70.0
+      stop_point: 70.0
+      y: 100.0
+    metrics:
+      - name: 'edge01'
+        bw: 100
+        delay: 10
+      - name: 'edge02'
+        bw: 100
+        delay: 10
+      - name: 'edge03'
+        bw: 100
+        delay: 10
+  - name: 'sim_stand2'
+    service: 'openface'
+    moving:
+      type: 'simple_roundtrip'
+      wait_time: 30
+      velocity: 0
+      start_point: 100.0
+      stop_point: 100.0
+      y: 50.0
+    metrics:
+      - name: 'edge01'
+        bw: 100
+        delay: 10
+      - name: 'edge02'
+        bw: 100
+        delay: 10
+      - name: 'edge03'
+        bw: 100
+        delay: 10
+  - name: 'sim_stand3'
+    service: 'openface'
+    moving:
+      type: 'simple_roundtrip'
+      wait_time: 30
+      velocity: 0
+      start_point: 170.0
+      stop_point: 170.0
+      y: 125.0
+    metrics:
+      - name: 'edge01'
+        bw: 100
+        delay: 10
+      - name: 'edge02'
+        bw: 100
+        delay: 10
+      - name: 'edge03'
+        bw: 100
+        delay: 10
+  - name: 'sim_stand4'
+    service: 'openface'
+    moving:
+      type: 'simple_roundtrip'
+      wait_time: 30
+      velocity: 0
+      start_point: 240.0
+      stop_point: 240.0
+      y: 0
+    metrics:
+      - name: 'edge01'
+        bw: 100
+        delay: 10
+      - name: 'edge02'
+        bw: 100
+        delay: 10
+      - name: 'edge03'
+        bw: 100
+        delay: 10
+  - name: 'sim_yolo_oposite'
+    service: 'yolo'
+    moving:
+      type: 'simple_roundtrip'
+      wait_time: 30
+      velocity: 0
+      start_point: 270.0
+      stop_point: 0.0
+      y: 75.0
+    metrics:
+      - name: 'edge01'
+        bw: 100
+        delay: 10
+      - name: 'edge02'
+        bw: 100
+        delay: 10
+      - name: 'edge03'
+        bw: 100
+        delay: 10
+      - name: 'edge04'
+        bw: 100
+        delay: 10
+

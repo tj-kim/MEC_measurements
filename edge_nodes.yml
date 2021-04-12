@@ -1,0 +1,124 @@
+centre:
+  - name: 'centre'
+    ip: 10.0.99.2
+
+placement_bs:
+  model: 'line'
+  number_bs: 3
+  distance_bs: 70.0
+
+aps:
+  - name: 'edge01'
+    bssid: '08:00:27:de:8b:b8'
+    passwd: ''
+    server: 'docker1'
+    x: 30
+    y: 0
+  - name: 'edge02'
+    bssid: '08:00:27:dc:d3:e2'
+    passwd: ''
+    server: 'docker2'
+    x: 100
+    y: 20
+  - name: 'edge03'
+    bssid: '08:00:27:05:00:d8'
+    passwd: ''
+    server: 'docker3'
+    x: 170
+    y: 0
+
+# Bandwidth in Mbps
+bw: &bw 100
+bw2: &bw2 75
+# Delay in millisecond
+delay: &delay 25
+delay2: &delay2 75
+
+servers:
+#  - name: 'centre'
+#    ip: 10.0.99.2
+#    rho: 5.987
+#    phi: 0.527
+#    benchmark: 14.4070
+#    core: 2
+#    distance: 0
+#    metrics:
+#      - name: 'docker1'
+#        bw: *bw2
+#        delay: *delay2
+#      - name: 'docker2'
+#        bw: *bw2
+#        delay: *delay2
+#      - name: 'docker3'
+#        bw: *bw2
+#        delay: *delay2
+#
+  - name: 'cloud'
+    ip: 10.0.99.9
+    rho: 0.168824157896507
+    phi: 0.0638253221191223
+    benchmark: 3.244056 #2.6805 #14.4070
+    core: 8
+    distance: 0
+    metrics:
+      - name: 'docker1'
+        bw: *bw2
+        delay: *delay2
+      - name: 'docker2'
+        bw: *bw2
+        delay: *delay2
+      - name: 'docker3'
+        bw: *bw2
+        delay: *delay2
+
+  - name: 'docker1'
+    ip: 10.0.99.10
+    rho: 0.168824157896507
+    phi: 0.0638253221191223
+    benchmark: 3.7288 #14.4070
+    core: 6
+    distance: 2
+    metrics:
+      - name: 'cloud'
+        bw: *bw2
+        delay: *delay2
+      - name: 'docker2'
+        bw: *bw
+        delay: *delay
+      - name: 'docker3'
+        bw: *bw
+        delay: *delay
+  - name: 'docker2'
+    ip: 10.0.99.11
+    rho: 0.168824157896507
+    phi: 0.0638253221191223
+    benchmark: 3.7288 #14.4070
+    core: 6
+    distance: 2
+    metrics:
+      - name: 'cloud'
+        bw: *bw2
+        delay: *delay2
+      - name: 'docker1'
+        bw: *bw
+        delay: *delay
+      - name: 'docker3'
+        bw: *bw
+        delay: *delay
+  - name: 'docker3'
+    ip: 10.0.99.12
+    rho: 0.168824157896507
+    phi: 0.0638253221191223
+    benchmark: 3.7288 #14.4070
+    core: 6
+    distance: 2
+    metrics:
+      - name: 'cloud'
+        bw: *bw2
+        delay: *delay2
+      - name: 'docker1'
+        bw: *bw
+        delay: *delay
+      - name: 'docker2'
+        bw: *bw
+        delay: *delay

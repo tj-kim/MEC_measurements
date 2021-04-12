@@ -1,0 +1,110 @@
+#"""
+#* Scenario1: No migration
+#* Scenario 2: Non-collaborative handover and migration.
+#  Migration happens after the event disconnection of the mobile EU occurs
+#* Scenario 3: Collaborative handover and migration with the random planner
+#* Scenario 4: Collaborative handover and migration with the RSSI-based planner
+#* Scenario 5: Collaborative handover and migration with the optimized planner
+#
+#Edge computing networks setup: WAN connection
+#  bandwidth between edge servers: 7.2 Mbps
+#  delay 25 ms for each machines, total RRT delay is 50 ms
+#
+#Mobile EU: (scenarios 2-5)
+#  Report RSSI and E2E delays to centralized controller
+#"""
+
+# Bandwidth in Mbps
+bw: &bw 7.2
+bw2: &bw2 50
+# Delay in millisecond
+delay: &delay 25
+delay2: &delay2 40
+
+centre:
+  - name: 'centre'
+    ip: '172.18.35.196'
+
+aps:
+  - name: 'edge01'
+    bssid: '52:3e:aa:49:98:cb'
+    passwd: ''
+    server: 'Edge1-OptiPlex-9020'
+  - name: 'edge02'
+    bssid: '52:3e:aa:49:87:7a'
+    passwd: ''
+    server: 'Edge2-Optiplex9020'
+  - name: 'edge03'
+    bssid: '84:16:f9:0f:b5:ce'
+    passwd: ''
+    server: 'Edge3-OptiPlex-9020'
+  - name: 'edge04'
+    bssid: '84:16:f9:09:f0:3f'
+    passwd: ''
+    server: 'Edge4-Precision-T1700'
+
+servers:
+  - name: 'Edge1-OptiPlex-9020'
+    ip: 172.18.38.168
+    distance: 2
+    metrics:
+      - name: 'Edge2-Optiplex9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge3-OptiPlex-9020'
+        bw: *bw
+        delay: *delay
+      - name: 'wnds-devbox'
+        bw: *bw
+        delay: *delay
+  - name: 'Edge2-Optiplex9020'
+    ip: 172.18.35.82
+    distance: 2
+    metrics:
+      - name: 'Edge1-OptiPlex-9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge3-OptiPlex-9020'
+        bw: *bw 
+        delay: *delay
+      - name: 'wnds-devbox'
+        bw: *bw
+        delay: *delay
+  - name: 'Edge3-OptiPlex-9020'
+    ip: 172.18.37.137
+    distance: 2
+    metrics:
+      - name: 'Edge1-OptiPlex-9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge2-Optiplex9020'
+        bw: *bw
+        delay: *delay
+      - name: 'wnds-devbox'
+        bw: *bw
+        delay: *delay
+  - name: 'Edge4-Precision-T1700'
+    ip: 172.18.39.89
+    distance: 2
+    metrics:
+      - name: 'Edge1-OptiPlex-9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge2-Optiplex9020'
+        bw: *bw
+        delay: *delay
+      - name: 'wnds-devbox'
+        bw: *bw
+        delay: *delay
+  - name: 'wnds-devbox'
+    ip: 172.18.43.227
+    metrics:
+      - name: 'Edge1-OptiPlex-9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge2-Optiplex9020'
+        bw: *bw
+        delay: *delay
+      - name: 'Edge3-OptiPlex-9020'
+        bw: *bw
+        delay: *delay

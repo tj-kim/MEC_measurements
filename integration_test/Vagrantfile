@@ -1,0 +1,114 @@
+Vagrant.configure("2") do |config|
+
+  required_plugins = %w( vagrant-vbguest vagrant-disksize)
+  _retry = false
+  required_plugins.each do |plugin|
+      unless Vagrant.has_plugin? plugin
+          system "vagrant plugin install #{plugin}"
+          _retry=true
+      end
+  end
+
+  if (_retry)
+      exec "vagrant " + ARGV.join(' ')
+  end
+
+  config.disksize.size = "30GB"
+
+  config.vm.synced_folder "../", "/mnt/edge/"
+  config.vm.provision "file", source: "../requirements.txt", destination: "requirements.txt"
+
+  config.vm.network "forwarded_port", guest: 9999, host: 9999, host_ip: "127.0.0.1",
+                    auto_correct: true
+
+  config.vm.define :centre do |centre|
+    centre.vm.box = "ubuntu/xenial64"
+    centre.vm.network "private_network", ip: "10.0.99.2"
+    centre.vm.hostname = "centre"
+    centre.vm.provider "virtualbox" do |v|
+        v.memory = 4096
+        v.cpus = 2
+    end
+    centre.vm.provision "shell" do |s|
+        s.path = "../setup_centre.sh"
+        s.args = ["-p"]
+    end
+  end
+
+  config.vm.define :cloud do |cloud|
+    cloud.vm.box = "ubuntu/xenial64"
+    cloud.vm.network "private_network", ip: "10.0.99.9"
+    cloud.vm.hostname = "cloud"
+    cloud.vm.provider "virtualbox" do |v|
+        v.memory = 8192
+        v.cpus = 8
+    end
+    (9900..9909).each do |request_port|
+      cloud.vm.network "forwarded_port", guest: request_port, host: request_port,
+                       host_ip: "127.0.0.1", auto_correct: true
+    end
+    cloud.vm.provision "shell" do |s|
+        s.path = "../setup_edgenode.sh"
+        s.args = ["-p"]
+        s.env = {"DISTANCE"=>"0"}
+    end
+  end
+
+  config.vm.define :docker1 do |docker1|
+    docker1.vm.box = "ubuntu/xenial64"
+    docker1.vm.network "private_network", ip: "10.0.99.10"
+    docker1.vm.hostname = "docker1"
+    docker1.vm.provider "virtualbox" do |v|
+        v.memory = 4096
+        v.cpus = 6
+    end
+    (9900..9909).each do |request_port|
+      docker1.vm.network "forwarded_port", guest: request_port, host: request_port,
+                       host_ip: "127.0.0.1", auto_correct: true
+    end
+    docker1.vm.provision "shell" do |s|
+        s.path = "../setup_edgenode.sh"
+        s.args = ["-p", "-n", "edge01"]
+        s.env = {"DISTANCE"=>"2"}
+    end
+  end
+
+  config.vm.define :docker2 do |docker2|
+    docker2.vm.box = "ubuntu/xenial64"
+    docker2.vm.network "private_network", ip: "10.0.99.11"
+    docker2.vm.hostname = "docker2"
+    docker2.vm.provider "virtualbox" do |v|
+        v.memory = 4096
+        v.cpus = 6
+    end
+    (9900..9909).each do |request_port|
+      docker2.vm.network "forwarded_port", guest: request_port, host: request_port,
+                         host_ip: "127.0.0.1", auto_correct: true
+    end
+    docker2.vm.provision "shell" do |s|
+        s.path = "../setup_edgenode.sh"
+        s.args = ["-p", "-n", "edge02"]
+        s.env = {"DISTANCE"=>"2"}
+    end
+  end
+
+  config.vm.define :docker3 do |docker3|
+    docker3.vm.box = "ubuntu/xenial64"
+    docker3.vm.network "private_network", ip: "10.0.99.12"
+    docker3.vm.hostname = "docker3"
+    docker3.vm.provider "virtualbox" do |v|
+        v.memory = 4096
+        v.cpus = 6
+    end
+    (9900..9909).each do |request_port|
+      docker3.vm.network "forwarded_port", guest: request_port, host: request_port,
+                         host_ip: "127.0.0.1", auto_correct: true
+    end
+    docker3.vm.provision "shell" do |s|
+        s.path = "../setup_edgenode.sh"
+        s.args = ["-p", "-n", "edge03"]
+        s.env = {"DISTANCE"=>"2"}
+    end
+  end
+
+end
